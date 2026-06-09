@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}Login — Rentify{% endblock %}
+
+{% block content %}
+<div class="form-card">
+  <div style="text-align: center; margin-bottom: 1.5rem;">
+    <div style="font-size: 2.5rem;">🔑</div>
+    <h2>Welcome Back</h2>
+    <p style="color: var(--gray); margin-top: 0.5rem;">Login to manage your bookings and listings</p>
+  </div>
+  <form method="post">
+    {% csrf_token %}
+    {% for field in form %}
+      <div class="form-group">
+        <label>{{ field.label }}</label>
+        {{ field }}
+        {% if field.errors %}<ul class="errorlist">{% for e in field.errors %}<li>{{ e }}</li>{% endfor %}</ul>{% endif %}
+      </div>
+    {% endfor %}
+    <button type="submit" class="btn btn-primary" style="width: 100%; padding: 0.9rem; margin-top: 0.5rem;">Login</button>
+  </form>
+  <p style="text-align: center; margin-top: 1.5rem; color: var(--gray);">
+    Don't have an account? <a href="{% url 'register' %}" style="color: var(--primary);">Sign Up</a>
+  </p>
+</div>
+{% endblock %}

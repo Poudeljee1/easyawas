@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}Edit: {{ content.label }} — EasyAwas{% endblock %}
+
+{% block content %}
+<div class="form-card" style="max-width: 680px;">
+  <div style="margin-bottom: 1.5rem;">
+    <a href="{% url 'site_content' %}" style="color: var(--gray); text-decoration: none; font-weight: 700; font-size: 0.9rem;">← Back to Site Content</a>
+  </div>
+  <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;">
+    <div style="font-size: 2rem;">✏️</div>
+    <div>
+      <h2 style="margin: 0;">{{ content.label }}</h2>
+      <code style="font-size: 0.8rem; color: var(--gray);">{{ content.key }}</code>
+    </div>
+  </div>
+  <form method="post">
+    {% csrf_token %}
+    {% for field in form %}
+      <div class="form-group">
+        <label>Content</label>
+        {{ field }}
+        {% if field.errors %}<ul class="errorlist">{% for e in field.errors %}<li>{{ e }}</li>{% endfor %}</ul>{% endif %}
+      </div>
+    {% endfor %}
+    <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
+      <button type="submit" class="btn btn-primary" style="flex: 1; padding: 0.9rem;">💾 Save Changes</button>
+      <a href="{% url 'site_content' %}" class="btn btn-secondary" style="flex: 1; text-align: center; padding: 0.9rem;">Cancel</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

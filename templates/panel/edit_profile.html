@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block title %}Edit Profile — EasyAwas{% endblock %}
+
+{% block content %}
+<div class="container" style="max-width: 700px;">
+  <div style="margin: 2rem 0 1.5rem;">
+    <a href="{% url 'dashboard' %}" style="color: var(--gray); text-decoration: none; font-weight: 700; font-size: 0.9rem;">← Back to Dashboard</a>
+  </div>
+
+  <div style="background: var(--card-bg); border-radius: var(--radius); border: 1.5px solid var(--border); overflow: hidden; box-shadow: var(--shadow);">
+    <!-- Header -->
+    <div style="background: linear-gradient(135deg, #fff7ed, #fef3c7); padding: 2rem; text-align: center; border-bottom: 1.5px solid var(--border);">
+      <div style="width: 90px; height: 90px; border-radius: 50%; overflow: hidden; background: var(--primary-light); border: 3px solid var(--primary); display: flex; align-items: center; justify-content: center; font-size: 3rem; margin: 0 auto 1rem;">
+        {% if profile_form.instance.photo %}
+          <img src="{{ profile_form.instance.photo.url }}" style="width: 100%; height: 100%; object-fit: cover;">
+        {% else %}
+          👤
+        {% endif %}
+      </div>
+      <h2 style="font-weight: 900; color: var(--dark);">Edit Your Profile</h2>
+      <p style="color: var(--gray); font-weight: 600; font-size: 0.9rem;">Update your personal info and how you appear to other users</p>
+    </div>
+
+    <form method="post" enctype="multipart/form-data" style="padding: 2rem;">
+      {% csrf_token %}
+
+      <h3 style="font-weight: 900; color: var(--dark); margin-bottom: 1.2rem; font-size: 1rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--gray);">Account Details</h3>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem;">
+        {% for field in account_form %}
+        <div class="form-group" style="margin: 0;">
+          <label>{{ field.label }}</label>
+          {{ field }}
+          {% if field.errors %}<ul class="errorlist">{% for e in field.errors %}<li>{{ e }}</li>{% endfor %}</ul>{% endif %}
+        </div>
+        {% endfor %}
+      </div>
+
+      <hr style="border: none; border-top: 1.5px solid var(--border); margin: 1.5rem 0;">
+
+      <h3 style="font-weight: 900; margin-bottom: 1.2rem; font-size: 1rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--gray);">Profile Details</h3>
+      {% for field in profile_form %}
+      <div class="form-group">
+        <label>{{ field.label }}</label>
+        {{ field }}
+        {% if field.errors %}<ul class="errorlist">{% for e in field.errors %}<li>{{ e }}</li>{% endfor %}</ul>{% endif %}
+      </div>
+      {% endfor %}
+
+      <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+        <button type="submit" class="btn btn-primary" style="flex: 1; padding: 0.9rem;">💾 Save Changes</button>
+        <a href="{% url 'dashboard' %}" class="btn btn-secondary" style="flex: 1; text-align: center; padding: 0.9rem;">Cancel</a>
+      </div>
+    </form>
+  </div>
+
+  <div style="margin-top: 1rem; text-align: center;">
+    <a href="{% url 'change_password' %}" style="color: var(--primary); font-weight: 700; font-size: 0.9rem; text-decoration: none;">🔒 Change Password</a>
+  </div>
+</div>
+{% endblock %}

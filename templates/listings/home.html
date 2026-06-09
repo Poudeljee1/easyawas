@@ -1,0 +1,123 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}EasyAwas — Find Rooms, Apartments & Houses{% endblock %}
+
+{% block content %}
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-content">
+    <div class="hero-badge">🇮🇳 Trusted Rental Platform</div>
+    <h1>Find Your <em>Perfect</em><br>Home Away From Home</h1>
+    <p>Rooms, apartments & houses — verified listings, easy booking</p>
+
+    <form class="search-bar" method="get" action="{% url 'home' %}">
+      <div class="field">
+        <label>🔍 Search</label>
+        <input type="text" name="q" placeholder="Location or title..." value="{{ request.GET.q }}">
+      </div>
+      <div class="field">
+        <label>📍 City</label>
+        <select name="city">
+          <option value="">All Cities</option>
+          {% for c in cities %}
+            <option value="{{ c }}" {% if request.GET.city == c %}selected{% endif %}>{{ c }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="field">
+        <label>🏠 Type</label>
+        <select name="type">
+          <option value="">All Types</option>
+          {% for value, label in property_types %}
+            <option value="{{ value }}" {% if request.GET.type == value %}selected{% endif %}>{{ label }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="field">
+        <label>💰 Min ₹</label>
+        <input type="number" name="min_price" placeholder="0" value="{{ request.GET.min_price }}">
+      </div>
+      <div class="field">
+        <label>💰 Max ₹</label>
+        <input type="number" name="max_price" placeholder="Any" value="{{ request.GET.max_price }}">
+      </div>
+      <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+  </div>
+</div>
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stat-item">
+    <div class="num">500+</div>
+    <div class="lbl">Verified Listings</div>
+  </div>
+  <div class="stat-item">
+    <div class="num">50+</div>
+    <div class="lbl">Cities Covered</div>
+  </div>
+  <div class="stat-item">
+    <div class="num">10K+</div>
+    <div class="lbl">Happy Renters</div>
+  </div>
+  <div class="stat-item">
+    <div class="num">4.8 ⭐</div>
+    <div class="lbl">Average Rating</div>
+  </div>
+</div>
+
+<!-- LISTINGS -->
+<div class="container">
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+    <h2 class="section-title" style="margin: 0;">
+      {% if properties %}
+        {{ properties|length }} Place{% if properties|length != 1 %}s{% endif %} Available
+      {% else %}
+        No Results Found
+      {% endif %}
+    </h2>
+    {% if user.is_authenticated %}
+      <a href="{% url 'create_listing' %}" class="btn btn-outline">+ List Your Property</a>
+    {% endif %}
+  </div>
+
+  {% if properties %}
+  <div class="property-grid">
+    {% for prop in properties %}
+    <a class="property-card" href="{% url 'property_detail' prop.pk %}">
+      {% if prop.image %}
+        <img src="{{ prop.image.url }}" alt="{{ prop.title }}">
+      {% else %}
+        <div class="placeholder-img">
+          {% if prop.property_type == 'room' %}🛏️{% elif prop.property_type == 'apartment' %}🏢{% else %}🏠{% endif %}
+        </div>
+      {% endif %}
+      <div class="card-body">
+        <span class="card-type-badge badge-{{ prop.property_type }}">{{ prop.get_property_type_display }}</span>
+        <div class="card-title">{{ prop.title }}</div>
+        <div class="card-location">📍 {{ prop.city }}</div>
+        <div class="card-meta">
+          <span>🛏 {{ prop.bedrooms }} bed</span>
+          <span>🚿 {{ prop.bathrooms }} bath</span>
+          <span>👥 up to {{ prop.max_guests }}</span>
+        </div>
+        <div class="card-footer">
+          <div class="card-price">₹{{ prop.price_per_night }} <span>/ night</span></div>
+          <div class="card-host">by {{ prop.host.username }}</div>
+        </div>
+      </div>
+    </a>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="empty-state">
+    <div class="icon">🔍</div>
+    <h3>No properties match your search</h3>
+    <p>Try different filters or <a href="{% url 'home' %}" style="color: var(--primary);">browse all listings</a></p>
+  </div>
+  {% endif %}
+</div>
+
+{% endblock %}

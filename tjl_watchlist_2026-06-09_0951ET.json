@@ -1,0 +1,8 @@
+{
+  "scanned_at": "2026-06-09T12:51:30Z",
+  "error": "TIME_GATE_FAILED",
+  "reason": "Scan aborted: current ET time is 09:51 ET, outside allowed window 10:00-15:30 ET.",
+  "candidates_checked": 0,
+  "hits": [],
+  "all_results": []
+}

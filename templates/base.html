@@ -1,0 +1,78 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}EasyAwas — Find Rooms, Apartments & Houses{% endblock %}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <meta name="description" content="EasyAwas — Find rooms, apartments and houses for rent near you.">
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="{% url 'home' %}">
+    <span class="logo-icon">🏡</span>
+    <span><span class="brand-easy">Easy</span><span class="brand-awas">Awas</span></span>
+  </a>
+  <div class="nav-links">
+    <a href="{% url 'home' %}">Browse</a>
+    {% if user.is_authenticated %}
+      <a href="{% url 'create_listing' %}" class="hide-mobile">+ List Property</a>
+      <a href="{% url 'my_listings' %}" class="hide-mobile">My Listings</a>
+      <a href="{% url 'my_bookings' %}">Bookings</a>
+      <a href="{% url 'dashboard' %}" class="btn btn-secondary">👤 Dashboard</a>
+      <a href="{% url 'logout' %}" class="btn btn-secondary">Logout</a>
+    {% else %}
+      <a href="{% url 'login' %}">Login</a>
+      <a href="{% url 'register' %}" class="btn btn-primary">Sign Up Free</a>
+    {% endif %}
+  </div>
+</nav>
+
+{% if messages %}
+<div class="messages">
+  {% for message in messages %}
+    <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+  {% endfor %}
+</div>
+{% endif %}
+
+{% block content %}{% endblock %}
+
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-brand">🏡 Easy<span>Awas</span></div>
+      <p style="font-size: 0.9rem; line-height: 1.7;">Your trusted platform for finding rooms, apartments &amp; houses to rent. Simple. Warm. Easy.</p>
+    </div>
+    <div>
+      <h4>Explore</h4>
+      <a href="{% url 'home' %}">All Listings</a>
+      <a href="{% url 'home' %}?type=room">Rooms</a>
+      <a href="{% url 'home' %}?type=apartment">Apartments</a>
+      <a href="{% url 'home' %}?type=house">Houses</a>
+    </div>
+    <div>
+      <h4>Account</h4>
+      {% if user.is_authenticated %}
+        <a href="{% url 'my_bookings' %}">My Bookings</a>
+        <a href="{% url 'my_listings' %}">My Listings</a>
+        <a href="{% url 'create_listing' %}">List a Property</a>
+        <a href="{% url 'logout' %}">Logout</a>
+      {% else %}
+        <a href="{% url 'register' %}">Sign Up Free</a>
+        <a href="{% url 'login' %}">Login</a>
+      {% endif %}
+    </div>
+  </div>
+  <div class="footer-copy">
+    &copy; 2025 EasyAwas. All rights reserved.
+  </div>
+</footer>
+
+</body>
+</html>

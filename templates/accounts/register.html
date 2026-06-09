@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %}Sign Up — Rentify{% endblock %}
+
+{% block content %}
+<div class="form-card">
+  <div style="text-align: center; margin-bottom: 1.5rem;">
+    <div style="font-size: 2.5rem;">🏠</div>
+    <h2>Create an Account</h2>
+    <p style="color: var(--gray); margin-top: 0.5rem;">Join Rentify to book or list properties</p>
+  </div>
+  <form method="post">
+    {% csrf_token %}
+    {% for field in form %}
+      <div class="form-group">
+        <label>{{ field.label }}</label>
+        {{ field }}
+        {% if field.errors %}<ul class="errorlist">{% for e in field.errors %}<li>{{ e }}</li>{% endfor %}</ul>{% endif %}
+        {% if field.help_text %}<small style="color: var(--gray);">{{ field.help_text }}</small>{% endif %}
+      </div>
+    {% endfor %}
+    <button type="submit" class="btn btn-primary" style="width: 100%; padding: 0.9rem; margin-top: 0.5rem;">Create Account</button>
+  </form>
+  <p style="text-align: center; margin-top: 1.5rem; color: var(--gray);">
+    Already have an account? <a href="{% url 'login' %}" style="color: var(--primary);">Login</a>
+  </p>
+</div>
+{% endblock %}

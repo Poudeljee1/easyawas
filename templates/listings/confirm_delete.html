@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}Delete Listing — Rentify{% endblock %}
+
+{% block content %}
+<div class="form-card" style="text-align: center;">
+  <div style="font-size: 3rem; margin-bottom: 1rem;">⚠️</div>
+  <h2>Delete Listing?</h2>
+  <p style="color: var(--gray); margin: 1rem 0 2rem;">Are you sure you want to delete <strong>{{ property.title }}</strong>? This cannot be undone.</p>
+  <form method="post" style="display: flex; gap: 1rem; justify-content: center;">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Yes, Delete</button>
+    <a href="{% url 'my_listings' %}" class="btn btn-secondary">Cancel</a>
+  </form>
+</div>
+{% endblock %}

@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block title %}Payment — Rentify{% endblock %}
+
+{% block content %}
+<div class="container" style="max-width: 600px; margin-top: 2rem;">
+  <div class="form-card">
+    <div style="text-align: center; margin-bottom: 1.5rem;">
+      <div style="font-size: 2.5rem;">💳</div>
+      <h2>Complete Payment</h2>
+    </div>
+
+    <div style="background: var(--light); border-radius: var(--radius); padding: 1.2rem; margin-bottom: 1.5rem;">
+      <h3 style="margin-bottom: 0.8rem; font-size: 1rem;">Booking Summary</h3>
+      <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+        <span style="color: var(--gray);">Property</span>
+        <strong>{{ booking.property.title }}</strong>
+      </div>
+      <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+        <span style="color: var(--gray);">Check-in</span>
+        <strong>{{ booking.check_in }}</strong>
+      </div>
+      <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+        <span style="color: var(--gray);">Check-out</span>
+        <strong>{{ booking.check_out }}</strong>
+      </div>
+      <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+        <span style="color: var(--gray);">Nights</span>
+        <strong>{{ booking.nights }}</strong>
+      </div>
+      <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+        <span style="color: var(--gray);">Guests</span>
+        <strong>{{ booking.guests }}</strong>
+      </div>
+      <hr style="border: none; border-top: 1px solid #e2e8f0; margin: 0.8rem 0;">
+      <div style="display: flex; justify-content: space-between; font-size: 1.1rem;">
+        <span style="font-weight: 700;">Total</span>
+        <strong style="color: var(--primary);">${{ booking.total_price }}</strong>
+      </div>
+    </div>
+
+    <div style="background: #fef3c7; border-radius: 8px; padding: 1rem; margin-bottom: 1.5rem; font-size: 0.9rem; color: #92400e;">
+      ⚠️ <strong>Test Mode:</strong> This is a demo. Configure your Stripe keys in settings.py to enable real payments.
+    </div>
+
+    <form method="post">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-success" style="width: 100%; padding: 0.9rem; font-size: 1rem;">
+        Confirm & Pay ${{ booking.total_price }}
+      </button>
+    </form>
+    <a href="{% url 'home' %}" style="display: block; text-align: center; margin-top: 1rem; color: var(--gray); font-size: 0.9rem;">Cancel booking</a>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block title %}My Bookings — Rentify{% endblock %}
+
+{% block content %}
+<div class="container">
+  <h2 class="section-title">My Bookings</h2>
+
+  {% if bookings %}
+  <div class="table-card">
+    <table>
+      <thead>
+        <tr>
+          <th>Property</th>
+          <th>Check-in</th>
+          <th>Check-out</th>
+          <th>Nights</th>
+          <th>Total</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for booking in bookings %}
+        <tr>
+          <td>
+            <a href="{% url 'property_detail' booking.property.pk %}" style="color: var(--primary); text-decoration: none; font-weight: 600;">
+              {{ booking.property.title }}
+            </a>
+            <div style="font-size: 0.8rem; color: var(--gray);">📍 {{ booking.property.city }}</div>
+          </td>
+          <td>{{ booking.check_in }}</td>
+          <td>{{ booking.check_out }}</td>
+          <td>{{ booking.nights }}</td>
+          <td><strong>${{ booking.total_price }}</strong></td>
+          <td><span class="status-{{ booking.status }}">{{ booking.get_status_display }}</span></td>
+          <td>
+            {% if booking.status == 'pending' %}
+              <a href="{% url 'booking_payment' booking.pk %}" class="btn btn-primary" style="font-size: 0.8rem; padding: 0.3rem 0.7rem;">Pay</a>
+            {% endif %}
+            {% if booking.status != 'cancelled' %}
+              <a href="{% url 'cancel_booking' booking.pk %}" class="btn btn-secondary" style="font-size: 0.8rem; padding: 0.3rem 0.7rem;">Cancel</a>
+            {% endif %}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <div class="empty-state">
+    <div class="icon">📅</div>
+    <h3>No bookings yet</h3>
+    <p>Browse properties and make your first booking</p>
+    <a href="{% url 'home' %}" class="btn btn-primary" style="margin-top: 1rem;">Browse Listings</a>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

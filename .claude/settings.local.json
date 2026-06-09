@@ -1,0 +1,32 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node C:\\\\Users\\\\USER\\\\tradingview-mcp\\\\src\\\\server.js)",
+      "PowerShell(node \"C:\\\\Users\\\\USER\\\\tradingview-mcp\\\\src\\\\server.js\" 2>&1)",
+      "Bash(bash premarket_gappers_scan.sh)",
+      "Bash(bash --version)",
+      "PowerShell(\\(Get-Command bash\\).Source)",
+      "mcp__tradingview__tv_health_check",
+      "mcp__tradingview__chart_set_symbol",
+      "mcp__tradingview__chart_set_timeframe",
+      "mcp__tradingview__data_get_ohlcv",
+      "mcp__tradingview__quote_get",
+      "mcp__tradingview__capture_screenshot",
+      "mcp__tradingview__ui_mouse_click",
+      "Bash(python -c \"import yfinance, openpyxl, pytz; print\\('All deps OK'\\)\")",
+      "Bash(pip install *)",
+      "Bash(python run_position_monitor.py)",
+      "Bash(python run_scanner_b.py)",
+      "Bash(python manage.py makemigrations)",
+      "Bash(python manage.py migrate)",
+      "Bash(python manage.py shell)",
+      "Bash(python manage.py runserver 8000)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://127.0.0.1:8000/)",
+      "mcp__Claude_Preview__preview_start",
+      "Bash(git init *)",
+      "Bash(git config *)",
+      "Bash(git add *)",
+      "Bash(git commit *)"
+    ]
+  }
+}

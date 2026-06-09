@@ -1,0 +1,139 @@
+{% extends 'base.html' %}
+
+{% block title %}My Dashboard — EasyAwas{% endblock %}
+
+{% block content %}
+<div style="background: linear-gradient(135deg, #fff7ed, #fef3c7); padding: 2.5rem 2rem 1rem;">
+  <div style="max-width: 1200px; margin: 0 auto;">
+    <div style="display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap;">
+      <div style="width: 80px; height: 80px; border-radius: 50%; overflow: hidden; background: var(--primary-light); border: 3px solid var(--primary); display: flex; align-items: center; justify-content: center; font-size: 2.5rem; flex-shrink: 0;">
+        {% if profile.photo %}
+          <img src="{{ profile.photo.url }}" style="width: 100%; height: 100%; object-fit: cover;">
+        {% else %}
+          👤
+        {% endif %}
+      </div>
+      <div>
+        <h1 style="font-size: 1.8rem; font-weight: 900; color: var(--dark);">
+          Welcome back, {{ user.first_name|default:user.username }}! 👋
+        </h1>
+        <p style="color: var(--gray); font-weight: 600;">{{ user.email }}</p>
+        {% if profile.location %}<p style="color: var(--gray); font-size: 0.9rem;">📍 {{ profile.location }}</p>{% endif %}
+      </div>
+      <div style="margin-left: auto; display: flex; gap: 0.75rem; flex-wrap: wrap;">
+        <a href="{% url 'edit_profile' %}" class="btn btn-primary">✏️ Edit Profile</a>
+        {% if user.is_staff %}
+          <a href="{% url 'site_content' %}" class="btn btn-outline">🌐 Edit Site Content</a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- STATS ROW -->
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin-bottom: 2rem;">
+    <div style="background: var(--card-bg); border-radius: var(--radius); border: 1.5px solid var(--border); padding: 1.5rem; text-align: center;">
+      <div style="font-size: 2rem; font-weight: 900; color: var(--primary);">{{ my_listings.count }}</div>
+      <div style="color: var(--gray); font-weight: 700; font-size: 0.9rem;">My Listings</div>
+    </div>
+    <div style="background: var(--card-bg); border-radius: var(--radius); border: 1.5px solid var(--border); padding: 1.5rem; text-align: center;">
+      <div style="font-size: 2rem; font-weight: 900; color: var(--secondary);">{{ my_bookings|length }}</div>
+      <div style="color: var(--gray); font-weight: 700; font-size: 0.9rem;">My Bookings</div>
+    </div>
+    <div style="background: var(--card-bg); border-radius: var(--radius); border: 1.5px solid var(--border); padding: 1.5rem; text-align: center;">
+      <div style="font-size: 2rem; font-weight: 900; color: #7c3aed;">₹{{ total_earnings }}</div>
+      <div style="color: var(--gray); font-weight: 700; font-size: 0.9rem;">Total Earnings</div>
+    </div>
+    <div style="background: var(--card-bg); border-radius: var(--radius); border: 1.5px solid var(--border); padding: 1.5rem; text-align: center;">
+      <div style="font-size: 2rem; font-weight: 900; color: var(--primary);">
+        {% if user.is_staff %}Admin{% else %}Member{% endif %}
+      </div>
+      <div style="color: var(--gray); font-weight: 700; font-size: 0.9rem;">Account Type</div>
+    </div>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+
+    <!-- MY LISTINGS -->
+    <div>
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+        <h2 class="section-title" style="margin: 0;">🏠 My Listings</h2>
+        <a href="{% url 'create_listing' %}" class="btn btn-primary" style="font-size: 0.85rem;">+ Add</a>
+      </div>
+      {% if my_listings %}
+        <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+          {% for prop in my_listings %}
+          <div style="background: var(--card-bg); border: 1.5px solid var(--border); border-radius: var(--radius-sm); padding: 1rem; display: flex; justify-content: space-between; align-items: center; gap: 1rem;">
+            <div style="flex: 1; min-width: 0;">
+              <div style="font-weight: 800; color: var(--dark); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ prop.title }}</div>
+              <div style="font-size: 0.83rem; color: var(--gray); font-weight: 600;">📍 {{ prop.city }} · ₹{{ prop.price_per_night }}/night</div>
+            </div>
+            <div style="display: flex; gap: 0.4rem; flex-shrink: 0;">
+              <a href="{% url 'property_detail' prop.pk %}" class="btn btn-secondary" style="font-size: 0.78rem; padding: 0.3rem 0.7rem;">View</a>
+              <a href="{% url 'edit_listing' prop.pk %}" class="btn btn-primary" style="font-size: 0.78rem; padding: 0.3rem 0.7rem;">Edit</a>
+              <a href="{% url 'delete_listing' prop.pk %}" class="btn btn-danger" style="font-size: 0.78rem; padding: 0.3rem 0.7rem;">✕</a>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+        <a href="{% url 'my_listings' %}" style="display: block; text-align: center; margin-top: 1rem; color: var(--primary); font-weight: 700; font-size: 0.9rem; text-decoration: none;">View all listings →</a>
+      {% else %}
+        <div style="background: var(--card-bg); border: 1.5px dashed var(--border); border-radius: var(--radius); padding: 2rem; text-align: center;">
+          <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🏠</div>
+          <p style="color: var(--gray); font-weight: 700; margin-bottom: 1rem;">No listings yet</p>
+          <a href="{% url 'create_listing' %}" class="btn btn-primary">Create First Listing</a>
+        </div>
+      {% endif %}
+    </div>
+
+    <!-- RECENT BOOKINGS -->
+    <div>
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+        <h2 class="section-title" style="margin: 0;">📅 Recent Bookings</h2>
+        <a href="{% url 'my_bookings' %}" class="btn btn-secondary" style="font-size: 0.85rem;">See all</a>
+      </div>
+      {% if my_bookings %}
+        <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+          {% for booking in my_bookings %}
+          <div style="background: var(--card-bg); border: 1.5px solid var(--border); border-radius: var(--radius-sm); padding: 1rem;">
+            <div style="font-weight: 800; color: var(--dark);">{{ booking.property.title }}</div>
+            <div style="font-size: 0.83rem; color: var(--gray); font-weight: 600; margin: 0.2rem 0;">
+              {{ booking.check_in }} → {{ booking.check_out }} · {{ booking.nights }} nights
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.5rem;">
+              <strong style="color: var(--primary);">₹{{ booking.total_price }}</strong>
+              <span class="status-{{ booking.status }}">{{ booking.get_status_display }}</span>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      {% else %}
+        <div style="background: var(--card-bg); border: 1.5px dashed var(--border); border-radius: var(--radius); padding: 2rem; text-align: center;">
+          <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">📅</div>
+          <p style="color: var(--gray); font-weight: 700; margin-bottom: 1rem;">No bookings yet</p>
+          <a href="{% url 'home' %}" class="btn btn-primary">Browse Listings</a>
+        </div>
+      {% endif %}
+    </div>
+
+  </div>
+
+  <!-- QUICK ACTIONS -->
+  <div style="margin-top: 2rem; background: var(--card-bg); border: 1.5px solid var(--border); border-radius: var(--radius); padding: 1.5rem;">
+    <h3 style="font-weight: 900; margin-bottom: 1rem; color: var(--dark);">⚡ Quick Actions</h3>
+    <div style="display: flex; flex-wrap: wrap; gap: 0.75rem;">
+      <a href="{% url 'edit_profile' %}" class="btn btn-secondary">✏️ Edit Profile</a>
+      <a href="{% url 'change_password' %}" class="btn btn-secondary">🔒 Change Password</a>
+      <a href="{% url 'create_listing' %}" class="btn btn-secondary">🏠 Add Listing</a>
+      <a href="{% url 'my_bookings' %}" class="btn btn-secondary">📅 All Bookings</a>
+      {% if user.is_staff %}
+        <a href="{% url 'site_content' %}" class="btn btn-secondary">🌐 Edit Site Content</a>
+        <a href="{% url 'admin:index' %}" class="btn btn-secondary" target="_blank">⚙️ Admin Panel</a>
+      {% endif %}
+    </div>
+  </div>
+
+</div>
+{% endblock %}

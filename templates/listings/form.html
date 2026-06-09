@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ action }} Listing — Rentify{% endblock %}
+
+{% block content %}
+<div class="form-card">
+  <h2>{{ action }} Listing</h2>
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {% for field in form %}
+      <div class="form-group">
+        <label>{{ field.label }}</label>
+        {{ field }}
+        {% if field.errors %}<ul class="errorlist">{% for e in field.errors %}<li>{{ e }}</li>{% endfor %}</ul>{% endif %}
+        {% if field.help_text %}<small style="color: var(--gray);">{{ field.help_text }}</small>{% endif %}
+      </div>
+    {% endfor %}
+    <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
+      <button type="submit" class="btn btn-primary">{{ action }} Listing</button>
+      <a href="{% url 'my_listings' %}" class="btn btn-secondary">Cancel</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block title %}My Listings — Rentify{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+    <h2 class="section-title" style="margin: 0;">My Listings</h2>
+    <a href="{% url 'create_listing' %}" class="btn btn-primary">+ Add Listing</a>
+  </div>
+
+  {% if properties %}
+  <div class="property-grid">
+    {% for prop in properties %}
+    <div class="property-card" style="text-decoration: none; color: inherit;">
+      {% if prop.image %}
+        <img src="{{ prop.image.url }}" alt="{{ prop.title }}">
+      {% else %}
+        <div class="placeholder-img">
+          {% if prop.property_type == 'room' %}🛏️{% elif prop.property_type == 'apartment' %}🏢{% else %}🏠{% endif %}
+        </div>
+      {% endif %}
+      <div class="card-body">
+        <div class="card-type">{{ prop.get_property_type_display }}</div>
+        <div class="card-title">{{ prop.title }}</div>
+        <div class="card-location">📍 {{ prop.city }}</div>
+        <div class="card-price">${{ prop.price_per_night }} <span>/ night</span></div>
+        <div style="display: flex; gap: 0.5rem; margin-top: 1rem;">
+          <a href="{% url 'property_detail' prop.pk %}" class="btn btn-secondary" style="flex: 1; text-align: center;">View</a>
+          <a href="{% url 'edit_listing' prop.pk %}" class="btn btn-primary" style="flex: 1; text-align: center;">Edit</a>
+          <a href="{% url 'delete_listing' prop.pk %}" class="btn btn-danger" style="flex: 1; text-align: center;">Delete</a>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="empty-state">
+    <div class="icon">🏠</div>
+    <h3>No listings yet</h3>
+    <p>Start earning by listing your property</p>
+    <a href="{% url 'create_listing' %}" class="btn btn-primary" style="margin-top: 1rem;">Create Your First Listing</a>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

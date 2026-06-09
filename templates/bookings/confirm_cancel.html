@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}Cancel Booking — Rentify{% endblock %}
+
+{% block content %}
+<div class="form-card" style="text-align: center;">
+  <div style="font-size: 3rem; margin-bottom: 1rem;">⚠️</div>
+  <h2>Cancel Booking?</h2>
+  <p style="color: var(--gray); margin: 1rem 0 2rem;">
+    Cancel your stay at <strong>{{ booking.property.title }}</strong><br>
+    {{ booking.check_in }} → {{ booking.check_out }}?
+  </p>
+  <form method="post" style="display: flex; gap: 1rem; justify-content: center;">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Yes, Cancel</button>
+    <a href="{% url 'my_bookings' %}" class="btn btn-secondary">Keep Booking</a>
+  </form>
+</div>
+{% endblock %}

@@ -1,0 +1,55 @@
+{
+  "scanned_at": "2026-06-09T14:40:00Z",
+  "scan_time_et": "10:40 ET",
+  "window": "10:00-15:30 ET",
+  "extended_hours": true,
+  "candidates_checked": 3,
+  "hits": [],
+  "all_results": [
+    {
+      "symbol": "AMD",
+      "prev_daily_high": 494.97,
+      "prev_daily_close": 490.33,
+      "sma200": 247.60,
+      "curr_px": 489.81,
+      "pmh": null,
+      "pmh_note": "skipped_daily_failed",
+      "today_hod": null,
+      "today_hod_note": "skipped_daily_failed",
+      "daily_breakout": false,
+      "intraday_breakout": null,
+      "result": "fail_daily",
+      "reason": "curr_px 489.81 < prev_daily_high 494.97"
+    },
+    {
+      "symbol": "NVDA",
+      "prev_daily_high": 210.47,
+      "prev_daily_close": 208.64,
+      "sma200": 188.74,
+      "curr_px": 206.46,
+      "pmh": null,
+      "pmh_note": "skipped_daily_failed",
+      "today_hod": null,
+      "today_hod_note": "skipped_daily_failed",
+      "daily_breakout": false,
+      "intraday_breakout": null,
+      "result": "fail_daily",
+      "reason": "curr_px 206.46 < prev_daily_high 210.47"
+    },
+    {
+      "symbol": "MU",
+      "prev_daily_high": 962.95,
+      "prev_daily_close": 949.28,
+      "sma200": 365.01,
+      "curr_px": 947.13,
+      "pmh": null,
+      "pmh_note": "skipped_daily_failed",
+      "today_hod": null,
+      "today_hod_note": "skipped_daily_failed",
+      "daily_breakout": false,
+      "intraday_breakout": null,
+      "result": "fail_daily",
+      "reason": "curr_px 947.13 < prev_daily_high 962.95"
+    }
+  ]
+}

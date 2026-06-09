@@ -1,0 +1,105 @@
+{
+  "scanned_at": "2026-06-09T12:35:50Z",
+  "gappers": [
+    {
+      "rank": 1,
+      "symbol": "TNGX",
+      "price": 30.93,
+      "gap_pct": 52.97,
+      "premarket_volume": 21813313,
+      "catalyst": "Tango Therapeutics reports 90% 6-month PFS in pancreatic cancer trial.",
+      "headlines": [
+        "Why Is Tango Therapeutics Stock Soaring Monday?",
+        "Tango Therapeutics Touts Encouraging Data From Early-Stage Cancer Trial, Raises Capital To Fund Advancement"
+      ]
+    },
+    {
+      "rank": 2,
+      "symbol": "GLXY",
+      "price": 30.51,
+      "gap_pct": 21.36,
+      "premarket_volume": 19313804,
+      "catalyst": "Galaxy Digital shares rising on broader crypto market strength and positive sector sentiment.",
+      "headlines": []
+    },
+    {
+      "rank": 3,
+      "symbol": "CBRS",
+      "price": 237.83,
+      "gap_pct": 18.32,
+      "premarket_volume": 8648747,
+      "catalyst": "Cerebras Systems shares are flying after a wave of Wall Street firms initiated coverage with bullish ratings and aggressive price targets.",
+      "headlines": []
+    },
+    {
+      "rank": 4,
+      "symbol": "MARA",
+      "price": 13.78,
+      "gap_pct": 11.85,
+      "premarket_volume": 32752741,
+      "catalyst": "GraniteShares launches autocallable ETFs tied to SMCI and MARA seeking monthly income from volatility in AI infrastructure and bitcoin mining stocks.",
+      "headlines": [
+        "AI Meets Crypto Income: GraniteShares Launches Super Micro Computer, MARA ETFs",
+        "Coinbase, MARA Holdings Plunge 4%, But Why Is HOOD Not Going Down?"
+      ]
+    },
+    {
+      "rank": 5,
+      "symbol": "OSCR",
+      "price": 27.39,
+      "gap_pct": 11.75,
+      "premarket_volume": 14927957,
+      "catalyst": "Oscar Health shares surged after the company reaffirmed its 2026 outlook and provided a business update.",
+      "headlines": []
+    },
+    {
+      "rank": 6,
+      "symbol": "IDYA",
+      "price": 31.48,
+      "gap_pct": 11.28,
+      "premarket_volume": 2574994,
+      "catalyst": null,
+      "headlines": []
+    },
+    {
+      "rank": 7,
+      "symbol": "INTC",
+      "price": 110.27,
+      "gap_pct": 11.19,
+      "premarket_volume": 136446915,
+      "catalyst": null,
+      "headlines": []
+    },
+    {
+      "rank": 8,
+      "symbol": "AAOI",
+      "price": 196.64,
+      "gap_pct": 11.1,
+      "premarket_volume": 14849160,
+      "catalyst": null,
+      "headlines": []
+    },
+    {
+      "rank": 9,
+      "symbol": "SYNA",
+      "price": 136.0,
+      "gap_pct": 10.77,
+      "premarket_volume": 1148466,
+      "catalyst": "Apple's AI ambitions may lead to gains for suppliers like TSMC, Broadcom, Arm, Corning and more.",
+      "headlines": [
+        "Synaptics Targets Foldable Boom with New S3930 Series Touch Controllers"
+      ]
+    },
+    {
+      "rank": 10,
+      "symbol": "IONQ",
+      "price": 62.8,
+      "gap_pct": 10.6,
+      "premarket_volume": 28472632,
+      "catalyst": "Martin Shkreli has escalated his stand against quantum computing firm IonQ, accusing the company of making wild Bitcoin mining claims.",
+      "headlines": [
+        "Martin Shkreli Accuses IONQ Of Making Wild Bitcoin Mining Claims: 'They Were Lying'"
+      ]
+    }
+  ]
+}

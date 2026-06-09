@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %}Book {{ property.title }} — Rentify{% endblock %}
+
+{% block content %}
+<div class="container" style="max-width: 700px; margin-top: 2rem;">
+  <a href="{% url 'property_detail' property.pk %}" style="color: var(--gray); text-decoration: none; font-size: 0.9rem;">← Back to listing</a>
+
+  <div class="form-card" style="margin-top: 1.5rem;">
+    <div style="display: flex; gap: 1rem; align-items: center; margin-bottom: 1.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid #e2e8f0;">
+      <div style="flex: 1;">
+        <div style="font-size: 0.8rem; color: var(--gray); text-transform: uppercase; font-weight: 600;">Booking</div>
+        <h2 style="margin: 0.3rem 0;">{{ property.title }}</h2>
+        <p style="color: var(--gray);">📍 {{ property.city }}</p>
+      </div>
+      <div style="text-align: right;">
+        <div style="font-size: 1.5rem; font-weight: 700; color: var(--primary)">${{ property.price_per_night }}</div>
+        <div style="color: var(--gray); font-size: 0.9rem;">per night</div>
+      </div>
+    </div>
+
+    <form method="post">
+      {% csrf_token %}
+      {% for field in form %}
+        <div class="form-group">
+          <label>{{ field.label }}</label>
+          {{ field }}
+          {% if field.errors %}<ul class="errorlist">{% for e in field.errors %}<li>{{ e }}</li>{% endfor %}</ul>{% endif %}
+        </div>
+      {% endfor %}
+
+      <div style="background: var(--light); border-radius: 8px; padding: 1rem; margin: 1.5rem 0; font-size: 0.9rem; color: var(--gray);">
+        💳 Payment will be processed on the next step.
+      </div>
+
+      <button type="submit" class="btn btn-primary" style="width: 100%; padding: 0.9rem;">Continue to Payment</button>
+    </form>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ property.title }} — Rentify{% endblock %}
+
+{% block content %}
+<div class="container" style="margin-top: 2rem;">
+  <a href="{% url 'home' %}" style="color: var(--gray); text-decoration: none; font-size: 0.9rem;">← Back to listings</a>
+
+  <div class="detail-layout" style="margin-top: 1.5rem;">
+    <div>
+      {% if property.image %}
+        <img class="detail-img" src="{{ property.image.url }}" alt="{{ property.title }}">
+      {% else %}
+        <div class="detail-placeholder">
+          {% if property.property_type == 'room' %}🛏️{% elif property.property_type == 'apartment' %}🏢{% else %}🏠{% endif %}
+        </div>
+      {% endif %}
+
+      <span class="badge badge-{{ property.property_type }}">{{ property.get_property_type_display }}</span>
+      <h1 class="detail-title">{{ property.title }}</h1>
+      <p class="detail-location">📍 {{ property.location }}, {{ property.city }}</p>
+
+      <div class="stats-row">
+        <div class="stat"><div class="stat-value">{{ property.bedrooms }}</div><div class="stat-label">Bedrooms</div></div>
+        <div class="stat"><div class="stat-value">{{ property.bathrooms }}</div><div class="stat-label">Bathrooms</div></div>
+        <div class="stat"><div class="stat-value">{{ property.max_guests }}</div><div class="stat-label">Max Guests</div></div>
+        <div class="stat"><div class="stat-value">${{ property.price_per_night }}</div><div class="stat-label">Per Night</div></div>
+      </div>
+
+      <h3 style="margin-bottom: 0.75rem;">About this place</h3>
+      <p style="color: var(--gray); line-height: 1.8;">{{ property.description }}</p>
+
+      {% if property.amenities_list %}
+      <h3 style="margin: 1.5rem 0 0.75rem;">Amenities</h3>
+      <div class="amenity-tags">
+        {% for amenity in property.amenities_list %}
+          <span class="amenity-tag">✓ {{ amenity }}</span>
+        {% endfor %}
+      </div>
+      {% endif %}
+
+      <p style="margin-top: 1.5rem; color: var(--gray); font-size: 0.9rem;">
+        Hosted by <strong>{{ property.host.username }}</strong>
+      </p>
+
+      {% if user == property.host %}
+      <div style="margin-top: 1.5rem; display: flex; gap: 1rem;">
+        <a href="{% url 'edit_listing' property.pk %}" class="btn btn-secondary">Edit Listing</a>
+        <a href="{% url 'delete_listing' property.pk %}" class="btn btn-danger">Delete</a>
+      </div>
+      {% endif %}
+    </div>
+
+    <div class="booking-card">
+      <div class="booking-price">${{ property.price_per_night }} <span>/ night</span></div>
+
+      {% if property.is_available %}
+        {% if user.is_authenticated %}
+          {% if user != property.host %}
+            <a href="{% url 'create_booking' property.pk %}" class="btn btn-primary" style="width: 100%; text-align: center; display: block; padding: 0.9rem;">Reserve Now</a>
+          {% else %}
+            <p style="color: var(--gray); font-size: 0.9rem; text-align: center;">This is your listing.</p>
+          {% endif %}
+        {% else %}
+          <a href="{% url 'login' %}?next={{ request.path }}" class="btn btn-primary" style="width: 100%; text-align: center; display: block; padding: 0.9rem;">Login to Book</a>
+        {% endif %}
+      {% else %}
+        <div style="text-align: center; color: var(--danger); font-weight: 600;">Not Available</div>
+      {% endif %}
+
+      <hr style="margin: 1.5rem 0; border: none; border-top: 1px solid #e2e8f0;">
+      <p style="font-size: 0.85rem; color: var(--gray); text-align: center;">You won't be charged yet</p>
+    </div>
+  </div>
+</div>
+{% endblock %}
