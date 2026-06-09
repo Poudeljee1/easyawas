@@ -2,7 +2,7 @@ services:
   - type: web
     name: easyawas
     runtime: python
-    buildCommand: "pip install -r requirements.txt && python manage.py collectstatic --noinput && python manage.py migrate"
+    buildCommand: "./build.sh"
     startCommand: "gunicorn rentify.wsgi:application"
     envVars:
       - key: SECRET_KEY
