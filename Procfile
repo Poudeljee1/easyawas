@@ -1,1 +1,1 @@
-web: gunicorn rentify.wsgi --log-file -
+web: gunicorn rentify.wsgi:application

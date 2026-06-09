@@ -3,7 +3,7 @@ services:
     name: easyawas
     runtime: python
     buildCommand: "pip install -r requirements.txt && python manage.py collectstatic --noinput && python manage.py migrate"
-    startCommand: "gunicorn rentify.wsgi"
+    startCommand: "gunicorn rentify.wsgi:application"
     envVars:
       - key: SECRET_KEY
         generateValue: true
