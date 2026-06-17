@@ -1,0 +1,130 @@
+//@version=6
+// Minervini VCP (Volatility Contraction Pattern) Strategy
+// Phase 1: Trend Template (all 5 Minervini rules)
+// Phase 2: VCP contraction detection (simplified)
+// Phase 3: Pivot breakout + volume explosion
+// Phase 4: Stop below contraction low, 20% target
+
+strategy("Minervini VCP Strategy", overlay=true,
+     default_qty_type=strategy.cash, default_qty_value=1000,
+     commission_type=strategy.commission.percent, commission_value=0.05,
+     initial_capital=100000)
+
+// ── Inputs ────────────────────────────────────────────────────────────────────
+tp_pct         = input.float(20.0, "Take Profit %",    step=0.5) / 100
+sl_pct         = input.float(5.0,  "Stop Loss %",      step=0.5) / 100
+vol_multiplier = input.float(1.5,  "Volume Explosion x", step=0.1)
+max_off_high   = input.float(25.0, "Max % off 52-week high", step=1.0) / 100
+
+// ── Moving Averages ───────────────────────────────────────────────────────────
+sma50  = ta.sma(close, 50)
+sma150 = ta.sma(close, 150)
+sma200 = ta.sma(close, 200)
+
+// ── Phase 1: Trend Template ───────────────────────────────────────────────────
+high_52w    = ta.highest(high, 252)
+low_52w     = ta.lowest(low,  252)
+
+r1_above_mas    = close > sma50 and close > sma150 and close > sma200
+r2_ma_align     = sma50 > sma150 and sma150 > sma200
+r3_sma200_up    = sma200 > sma200[21]   // SMA200 higher than 1 month ago
+r4_near_high    = (high_52w - close) / high_52w < max_off_high
+r5_above_low    = close > (low_52w * 1.25)   // at least 25% above 52-week low
+
+trend_template  = r1_above_mas and r2_ma_align and r3_sma200_up and r4_near_high and r5_above_low
+
+// ── Phase 2: VCP Contraction (simplified) ────────────────────────────────────
+// Look at last 30 bars for a tight base: range < 10%, shrinking volatility
+lookback  = 30
+hh        = ta.highest(high,  lookback)
+ll        = ta.lowest(low,    lookback)
+base_width = (hh - ll) / ll * 100
+
+// Is the recent range contracting? Compare last-10-bar range vs 20-bar range
+hh10  = ta.highest(high,  10)
+ll10  = ta.lowest(low,    10)
+hh20  = ta.highest(high,  20)
+ll20  = ta.lowest(low,    20)
+range10 = hh10 - ll10
+range20 = hh20 - ll20
+contracting = range10 < range20 * 0.65   // recent range is < 65% of older range
+
+tight_base   = base_width < 20.0         // base is <20% wide
+vcp_signal   = contracting and tight_base
+
+// Volume dry-up: current 5-bar volume below 60% of 20-bar avg
+vol_ma20      = ta.sma(volume, 20)
+vol_ma5       = ta.sma(volume, 5)
+volume_dry_up = vol_ma5 < vol_ma20 * 0.60
+
+// Pivot = recent consolidation high (highest of last 15 bars)
+pivot_high    = ta.highest(high, 15)
+
+// ── Phase 3: Breakout ─────────────────────────────────────────────────────────
+vol_ma50        = ta.sma(volume, 50)
+vol_exploding   = volume > vol_ma50 * vol_multiplier
+above_pivot     = close > pivot_high[1]   // breaks above prior 15-bar high
+
+breakout_signal = trend_template and vcp_signal and above_pivot and vol_exploding
+
+// ── Strategy execution ────────────────────────────────────────────────────────
+if breakout_signal and strategy.position_size == 0
+    tp_price = close * (1 + tp_pct)
+    sl_price = close * (1 - sl_pct)
+    strategy.entry("VCP Long", strategy.long)
+    strategy.exit("VCP Exit", "VCP Long", limit=tp_price, stop=sl_price)
+
+// ── Webhook alert -- paste URL in TradingView alert dialog ───────────────────
+// URL: https://easyawas.onrender.com/webhook/trade/
+alertcondition(breakout_signal and strategy.position_size[1] == 0,
+     title="VCP Breakout",
+     message='{"symbol":"{{ticker}}","price":"{{close}}","strategy":"VCP_Minervini","action":"BUY","tp_pct":"20.0","sl_pct":"5.0"}')
+
+// ── Plots ─────────────────────────────────────────────────────────────────────
+plot(sma50,  "SMA 50",  color=color.new(color.green,  0), linewidth=1)
+plot(sma150, "SMA 150", color=color.new(color.orange, 0), linewidth=1)
+plot(sma200, "SMA 200", color=color.new(color.blue,   0), linewidth=2)
+
+// Pivot level
+plot(pivot_high, "Pivot High", color=color.new(color.purple, 0), linewidth=1, style=plot.style_stepline)
+
+// 52-week high
+plot(high_52w, "52W High", color=color.new(color.red, 60), linewidth=1, style=plot.style_stepline)
+
+// Trend template background
+bgcolor(trend_template ? color.new(color.green, 95) : na, title="Trend Template OK")
+
+// Breakout marker
+plotshape(breakout_signal, title="VCP Breakout", style=shape.triangleup,
+     location=location.belowbar, color=color.new(color.lime, 0), size=size.normal)
+
+// ── Info table ────────────────────────────────────────────────────────────────
+var table info = table.new(position.top_right, 2, 7,
+     bgcolor=color.new(color.black, 70), frame_color=color.gray, frame_width=1, border_width=1)
+
+if barstate.islast
+    table.cell(info, 0, 0, "VCP SCANNER",         text_color=color.white,  text_size=size.small)
+    table.cell(info, 1, 0, "Status",               text_color=color.yellow, text_size=size.small)
+    table.cell(info, 0, 1, "Trend Template",       text_color=color.silver, text_size=size.small)
+    table.cell(info, 1, 1, trend_template ? "PASS" : "FAIL",
+         text_color=trend_template ? color.lime : color.red, text_size=size.small)
+    table.cell(info, 0, 2, "VCP Pattern",          text_color=color.silver, text_size=size.small)
+    table.cell(info, 1, 2, vcp_signal ? "YES" : "NO",
+         text_color=vcp_signal ? color.lime : color.orange, text_size=size.small)
+    table.cell(info, 0, 3, "Volume Dry-up",        text_color=color.silver, text_size=size.small)
+    table.cell(info, 1, 3, volume_dry_up ? "YES" : "NO",
+         text_color=volume_dry_up ? color.lime : color.gray, text_size=size.small)
+    table.cell(info, 0, 4, "Base Width",           text_color=color.silver, text_size=size.small)
+    table.cell(info, 1, 4, str.tostring(math.round(base_width, 1)) + "%",
+         text_color=color.white, text_size=size.small)
+    table.cell(info, 0, 5, "Off 52W High",         text_color=color.silver, text_size=size.small)
+    table.cell(info, 1, 5, str.tostring(math.round((high_52w - close) / high_52w * 100, 1)) + "%",
+         text_color=color.white, text_size=size.small)
+    table.cell(info, 0, 6, "SMA Align",            text_color=color.silver, text_size=size.small)
+    table.cell(info, 1, 6, r2_ma_align ? "50>150>200" : "BROKEN",
+         text_color=r2_ma_align ? color.lime : color.red, text_size=size.small)
+
+// ── Alerts ────────────────────────────────────────────────────────────────────
+alertcondition(breakout_signal, "VCP Breakout", "VCP Breakout: {{ticker}} @ {{close}} | Vol {{volume}}")
+alertcondition(trend_template and vcp_signal and volume_dry_up,
+     "VCP Ready (pre-breakout)", "VCP Setup Ready: {{ticker}} near pivot -- watch for breakout")

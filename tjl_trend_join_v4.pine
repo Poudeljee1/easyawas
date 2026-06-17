@@ -1,0 +1,74 @@
+//@version=5
+strategy("TJL Trend Join Long v4", overlay=true,
+         default_qty_type=strategy.fixed, default_qty_value=1,
+         initial_capital=10000,
+         commission_type=strategy.commission.percent, commission_value=0.1,
+         calc_on_every_tick=false)
+
+// ── Inputs ────────────────────────────────────────────────────────────────────
+i_tpPct     = input.float(3.0, "Take Profit %", minval=0.1, step=0.1) / 100
+i_slPct     = input.float(1.5, "Stop Loss %",   minval=0.1, step=0.1) / 100
+i_showPMH   = input.bool(true, "Show Premarket High line")
+i_showPDH   = input.bool(true, "Show Prev Day High line")
+
+// ── Daily reference values ────────────────────────────────────────────────────
+prevDayHigh  = request.security(syminfo.tickerid, "D", high[1],  lookahead=barmerge.lookahead_off)
+prevDayClose = request.security(syminfo.tickerid, "D", close[1], lookahead=barmerge.lookahead_off)
+sma200_daily = request.security(syminfo.tickerid, "D", ta.sma(close, 200), lookahead=barmerge.lookahead_off)
+
+// ── ET time helpers ───────────────────────────────────────────────────────────
+nyHour   = hour(time,   "America/New_York")
+nyMinute = minute(time, "America/New_York")
+
+// ── Premarket High (reset each calendar day, track 04:00–09:29 ET) ────────────
+isNewDay    = ta.change(time("D")) != 0
+isPremarket = (nyHour >= 4 and nyHour < 9) or (nyHour == 9 and nyMinute < 30)
+
+var float pmh = na
+if isNewDay
+    pmh := na
+if isPremarket
+    pmh := na(pmh) ? high : math.max(pmh, high)
+
+// ── Entry conditions ──────────────────────────────────────────────────────────
+inRTH        = session.ismarket
+inTimeWindow = nyHour >= 10 and nyHour < 14          // 10:00–13:59 ET only
+dailyUptrend = prevDayClose > sma200_daily            // above SMA200
+dailyBreakout = close > prevDayHigh                   // above prev day high
+pmhBreakout  = not na(pmh) and close > pmh            // above premarket high
+
+canEnter = inRTH and inTimeWindow and dailyUptrend and dailyBreakout and pmhBreakout
+
+// Force-close gate (15:50 ET)
+atForceClose = nyHour == 15 and nyMinute >= 50
+
+// ── Strategy execution ────────────────────────────────────────────────────────
+if canEnter and strategy.position_size == 0
+    strategy.entry("TJL Long", strategy.long)
+
+if strategy.position_size > 0
+    ep = strategy.opentrades.entry_price(0)
+    strategy.exit("Exit", from_entry="TJL Long",
+                  limit = ep * (1 + i_tpPct),
+                  stop  = ep * (1 - i_slPct))
+
+if atForceClose and strategy.position_size > 0
+    strategy.close_all("EOD")
+
+// ── Plots ─────────────────────────────────────────────────────────────────────
+plot(sma200_daily, "SMA 200", color=color.new(color.blue, 0), linewidth=2)
+
+plot(i_showPDH ? prevDayHigh : na, "Prev Day High",
+     color=color.new(color.orange, 0), linewidth=1, style=plot.style_stepline)
+
+plot(i_showPMH and not na(pmh) ? pmh : na, "Premarket High",
+     color=color.new(color.purple, 0), linewidth=1, style=plot.style_stepline)
+
+bgcolor(canEnter ? color.new(color.green, 90) : na, title="Entry Zone")
+
+// ── Alert condition (webhook JSON) ───────────────────────────────────────────
+// Paste this message into TradingView alert → Webhook URL box:
+// https://easyawas.onrender.com/webhook/trade/
+alertcondition(canEnter and strategy.position_size == 0,
+               title="TJL Entry Signal",
+               message='{"symbol":"{{ticker}}","price":"{{close}}","strategy":"TJL_Long","action":"BUY","tp_pct":"3.0","sl_pct":"1.5"}')

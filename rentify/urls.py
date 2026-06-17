@@ -9,4 +9,5 @@ urlpatterns = [
     path('accounts/', include('accounts.urls')),
     path('bookings/', include('bookings.urls')),
     path('my/', include('panel.urls')),
+    path('webhook/', include('webhook.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

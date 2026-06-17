@@ -26,6 +26,7 @@ INSTALLED_APPS = [
     'accounts',
     'bookings',
     'panel',
+    'webhook',
 ]
 
 MIDDLEWARE = [
