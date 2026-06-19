@@ -1,0 +1,824 @@
+<!-- wp:html -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+<style>
+/* BASE */
+.ea-home *{box-sizing:border-box;margin:0;padding:0;}
+.ea-home{font-family:'Inter',sans-serif;color:#2C2C2C;font-size:16px;line-height:1.6;}
+.ea-home a{text-decoration:none;color:inherit;}
+.ea-home ul{list-style:none;}
+
+/* Hide duplicate nav — Kadence provides the site header */
+.ea-nav,.ea-mob-menu{display:none!important;}
+
+/* HERO */
+.ea-hero{background:#fff;padding:80px 24px;}
+.ea-hero-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;}
+.ea-hero-text h1{font-size:2.8rem;font-weight:900;line-height:1.15;margin-bottom:14px;letter-spacing:-.5px;}
+.ea-hero-text h1 span{color:#E8502A;}
+.ea-hero-text>p{font-size:1.05rem;color:#555;font-weight:500;margin-bottom:28px;}
+.ea-search-box{background:#F7F7F7;border-radius:10px;padding:22px;border:1px solid #E0E0E0;}
+.ea-tabs{display:flex;border-bottom:2px solid #E0E0E0;margin-bottom:18px;}
+.ea-tab{padding:9px 18px;font-size:14px;font-weight:700;color:#aaa;cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-2px;transition:all .2s;}
+.ea-tab.on{color:#E8502A;border-bottom-color:#E8502A;}
+.ea-search-row{display:flex;gap:10px;}
+.ea-search-inp{flex:1;padding:12px 14px;border:1.5px solid #E0E0E0;border-radius:5px;font-size:15px;font-family:'Inter',sans-serif;outline:none;transition:border .2s;}
+.ea-search-inp:focus{border-color:#E8502A;}
+.ea-search-go{padding:12px 24px;background:#E8502A;color:#fff;border:none;border-radius:5px;font-size:15px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;white-space:nowrap;}
+.ea-search-go:hover{background:#c73e1f;}
+.ea-trust{display:inline-flex;align-items:center;gap:8px;margin-top:18px;background:#fff;border:1px solid #E0E0E0;border-radius:50px;padding:7px 14px;font-size:13px;font-weight:600;color:#555;}
+.ea-trust-stars{color:#00B67A;}
+.ea-hero-img{border-radius:12px;height:400px;background:linear-gradient(135deg,#fff7f5,#ffe4dc);display:flex;align-items:center;justify-content:center;position:relative;}
+.ea-hero-img-text{text-align:center;}
+.ea-hero-img-text .icon{font-size:72px;margin-bottom:12px;}
+.ea-hero-img-text p{font-size:13px;color:#aaa;font-weight:600;}
+.ea-hero-card{position:absolute;bottom:20px;left:20px;background:#fff;border-radius:10px;padding:12px 16px;box-shadow:0 4px 20px rgba(0,0,0,.12);}
+.ea-hero-card strong{display:block;font-size:1.15rem;font-weight:900;color:#E8502A;}
+.ea-hero-card span{font-size:12px;color:#777;font-weight:600;}
+
+/* SECTIONS */
+.ea-section{padding:80px 24px;}
+.ea-section.grey{background:#F7F7F7;}
+.ea-section.white{background:#fff;}
+.ea-section.coral{background:#E8502A;}
+.ea-wrap{max-width:1200px;margin:0 auto;}
+.ea-label{font-size:12px;font-weight:800;letter-spacing:.1em;color:#E8502A;text-transform:uppercase;margin-bottom:8px;}
+.ea-section.coral .ea-label{color:rgba(255,255,255,.7);}
+.ea-h2{font-size:1.8rem;font-weight:900;color:#2C2C2C;margin-bottom:40px;}
+.ea-section.coral .ea-h2{color:#fff;}
+
+/* FEATURES */
+.ea-feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+.ea-feat-card{background:#fff;border-radius:10px;padding:32px 26px;border:1px solid #E0E0E0;transition:all .25s;}
+.ea-feat-card:hover{transform:translateY(-3px);box-shadow:0 8px 28px rgba(0,0,0,.08);}
+.ea-feat-icon{width:52px;height:52px;background:#fff5f3;border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:18px;}
+.ea-feat-icon svg{width:26px;height:26px;}
+.ea-feat-card h3{font-size:1rem;font-weight:800;margin-bottom:8px;}
+.ea-feat-card p{font-size:14px;color:#666;line-height:1.7;}
+
+/* CTA CARDS */
+.ea-cta-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+.ea-cta-card{border-radius:10px;padding:44px 36px;border:1px solid #E0E0E0;transition:all .25s;overflow:hidden;position:relative;}
+.ea-cta-card:hover{transform:translateY(-3px);box-shadow:0 8px 28px rgba(0,0,0,.1);}
+.ea-cta-card.a{background:linear-gradient(135deg,#fff5f3,#fff);}
+.ea-cta-card.b{background:linear-gradient(135deg,#f3f7ff,#fff);}
+.ea-cta-card .emoji{font-size:44px;margin-bottom:16px;display:block;}
+.ea-cta-card h3{font-size:1.3rem;font-weight:900;margin-bottom:10px;}
+.ea-cta-card p{font-size:14px;color:#666;margin-bottom:24px;line-height:1.7;}
+.ea-cta-btn{display:inline-block;padding:12px 26px;background:#E8502A;color:#fff;border-radius:5px;font-size:14px;font-weight:700;transition:background .2s;cursor:pointer;}
+.ea-cta-btn:hover{background:#c73e1f;color:#fff;}
+
+/* CITIES */
+.ea-cities{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px;}
+.ea-city{padding:9px 20px;background:#fff;border:1.5px solid #E0E0E0;border-radius:50px;font-size:14px;font-weight:700;cursor:pointer;transition:all .2s;}
+.ea-city:hover{background:#E8502A;border-color:#E8502A;color:#fff;}
+
+/* HOW */
+.ea-how-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin-top:40px;position:relative;}
+.ea-how-grid::before{content:'';position:absolute;top:34px;left:calc(16.7% + 16px);right:calc(16.7% + 16px);height:2px;background:linear-gradient(90deg,#E8502A,#ff9a7c);}
+.ea-step{text-align:center;position:relative;z-index:1;}
+.ea-step-num{width:68px;height:68px;background:#E8502A;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.5rem;font-weight:900;margin:0 auto 18px;box-shadow:0 4px 14px rgba(232,80,42,.3);}
+.ea-step h3{font-size:1rem;font-weight:800;margin-bottom:8px;}
+.ea-step p{font-size:14px;color:#666;line-height:1.7;}
+
+/* STATS */
+.ea-stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;text-align:center;}
+.ea-stat strong{display:block;font-size:2.3rem;font-weight:900;color:#fff;margin-bottom:4px;}
+.ea-stat span{font-size:13px;color:rgba(255,255,255,.75);font-weight:600;}
+
+/* MEDIA */
+.ea-media-logos{display:flex;justify-content:center;align-items:center;gap:40px;flex-wrap:wrap;margin-top:28px;}
+.ea-media-logo{padding:12px 22px;background:#fff;border:1px solid #E0E0E0;border-radius:8px;font-size:14px;font-weight:800;color:#ccc;}
+
+/* FOOTER */
+.ea-footer{background:#2C2C2C;color:#fff;padding:64px 24px 0;}
+.ea-footer-grid{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:40px;padding-bottom:48px;border-bottom:1px solid rgba(255,255,255,.1);}
+.ea-footer-logo{font-size:1.3rem;font-weight:900;color:#E8502A;margin-bottom:10px;}
+.ea-footer-logo span{color:#fff;}
+.ea-footer-grid>div>p{font-size:13px;color:rgba(255,255,255,.5);line-height:1.7;}
+.ea-footer-grid h4{font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;margin-bottom:16px;}
+.ea-footer-grid ul li{margin-bottom:9px;}
+.ea-footer-grid ul li a{font-size:13px;color:rgba(255,255,255,.55);transition:color .2s;}
+.ea-footer-grid ul li a:hover{color:#E8502A;}
+.ea-footer-bottom{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;padding:20px 0;flex-wrap:wrap;gap:14px;}
+.ea-footer-bottom p{font-size:12px;color:rgba(255,255,255,.35);}
+.ea-socials{display:flex;gap:10px;}
+.ea-soc{width:34px;height:34px;background:rgba(255,255,255,.1);border-radius:7px;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.6);font-size:13px;font-weight:700;cursor:pointer;transition:all .2s;}
+.ea-soc:hover{background:#E8502A;color:#fff;}
+
+/* ═══════════════════════════════
+   AUTH MODAL — Daraz style
+═══════════════════════════════ */
+.ea-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:999999;align-items:center;justify-content:center;padding:16px;}
+.ea-overlay.on{display:flex!important;}
+.ea-modal{background:#fff;border-radius:8px;width:100%;max-width:400px;overflow:hidden;box-shadow:0 12px 48px rgba(0,0,0,.22);max-height:96vh;overflow-y:auto;}
+/* red top bar */
+.ea-mhead{background:#E8502A;padding:22px 28px 18px;text-align:center;position:relative;}
+.ea-mhead-logo{font-size:1.35rem;font-weight:900;color:#fff;}
+.ea-mhead p{font-size:12px;color:rgba(255,255,255,.8);margin-top:3px;}
+.ea-mclose{position:absolute;top:12px;right:14px;background:none;border:none;color:rgba(255,255,255,.8);font-size:20px;cursor:pointer;font-family:'Inter',sans-serif;line-height:1;}
+.ea-mclose:hover{color:#fff;}
+/* body */
+.ea-mbody{padding:26px 26px 22px;}
+/* screens */
+.ea-sc{display:none;}
+.ea-sc.on{display:block;}
+.ea-sc h3{font-size:1.05rem;font-weight:800;color:#2C2C2C;margin-bottom:3px;}
+.ea-sc-sub{font-size:13px;color:#888;margin-bottom:18px;line-height:1.5;}
+/* method pills */
+.ea-mpills{display:flex;background:#F5F5F5;border-radius:6px;padding:3px;margin-bottom:18px;}
+.ea-mpill{flex:1;padding:8px;border:none;background:transparent;font-size:13px;font-weight:700;color:#999;border-radius:5px;cursor:pointer;font-family:'Inter',sans-serif;transition:all .2s;}
+.ea-mpill.on{background:#fff;color:#E8502A;box-shadow:0 1px 4px rgba(0,0,0,.1);}
+/* inputs */
+.ea-field{margin-bottom:14px;}
+.ea-field label{display:block;font-size:11px;font-weight:700;color:#666;text-transform:uppercase;letter-spacing:.05em;margin-bottom:5px;}
+.ea-inp{width:100%;padding:12px 14px;border:1.5px solid #E0E0E0;border-radius:6px;font-size:15px;font-family:'Inter',sans-serif;color:#2C2C2C;outline:none;transition:border .2s;}
+.ea-inp:focus{border-color:#E8502A;box-shadow:0 0 0 3px rgba(232,80,42,.08);}
+/* phone row */
+.ea-ph-row{display:flex;gap:8px;}
+.ea-ph-code{width:108px;flex-shrink:0;padding:12px 8px;border:1.5px solid #E0E0E0;border-radius:6px;font-size:13px;font-family:'Inter',sans-serif;background:#fff;outline:none;}
+.ea-ph-code:focus{border-color:#E8502A;}
+/* OTP */
+.ea-otp-row{display:flex;gap:8px;margin-bottom:8px;}
+.ea-otp-d{flex:1;height:50px;border:1.5px solid #E0E0E0;border-radius:6px;font-size:20px;font-weight:800;text-align:center;font-family:'Inter',sans-serif;outline:none;transition:border .2s;}
+.ea-otp-d:focus{border-color:#E8502A;box-shadow:0 0 0 3px rgba(232,80,42,.1);}
+.ea-resend-row{font-size:12px;color:#888;margin-bottom:16px;}
+.ea-resend-btn{background:none;border:none;color:#E8502A;font-weight:700;font-size:12px;cursor:pointer;font-family:'Inter',sans-serif;padding:0;}
+.ea-resend-btn:disabled{color:#ccc;cursor:default;}
+/* pw */
+.ea-pw-wrap{position:relative;}
+.ea-pw-wrap .ea-inp{padding-right:50px;}
+.ea-pw-eye{position:absolute;right:13px;top:50%;transform:translateY(-50%);font-size:12px;font-weight:700;color:#bbb;cursor:pointer;user-select:none;}
+.ea-pw-bar{height:4px;background:#eee;border-radius:4px;margin-top:6px;overflow:hidden;}
+.ea-pw-bar div{height:100%;width:0;border-radius:4px;transition:all .3s;}
+.ea-pw-lbl{font-size:11px;font-weight:700;margin-top:3px;}
+/* buttons */
+.ea-msubmit{width:100%;padding:13px;background:#E8502A;color:#fff;border:none;border-radius:6px;font-size:15px;font-weight:800;cursor:pointer;font-family:'Inter',sans-serif;transition:background .2s;margin-bottom:12px;}
+.ea-msubmit:hover{background:#c73e1f;}
+.ea-mgoogle{display:flex;align-items:center;justify-content:center;gap:9px;width:100%;padding:11px;border:1.5px solid #E0E0E0;border-radius:6px;background:#fff;font-size:14px;font-weight:600;color:#2C2C2C;cursor:pointer;font-family:'Inter',sans-serif;transition:border .2s;margin-bottom:12px;}
+.ea-mgoogle:hover{border-color:#4285F4;background:#f8f9ff;}
+.ea-mgoogle svg{width:18px;height:18px;flex-shrink:0;}
+.ea-mor{display:flex;align-items:center;gap:10px;margin:12px 0;}
+.ea-mor::before,.ea-mor::after{content:'';flex:1;height:1px;background:#E0E0E0;}
+.ea-mor span{font-size:11px;color:#ccc;font-weight:700;}
+/* msg */
+.ea-mmsg{padding:9px 12px;border-radius:6px;font-size:13px;font-weight:600;margin-bottom:12px;display:none;}
+.ea-mmsg.ok{background:#f0fdf4;color:#16a34a;border:1px solid #bbf7d0;display:block;}
+.ea-mmsg.err{background:#fef2f2;color:#dc2626;border:1px solid #fecaca;display:block;}
+/* verified chip */
+.ea-chip{display:inline-flex;align-items:center;gap:5px;background:#f0fdf4;color:#16a34a;border:1px solid #bbf7d0;border-radius:50px;padding:4px 10px;font-size:12px;font-weight:700;margin-bottom:12px;}
+/* foot */
+.ea-mfoot{font-size:12px;color:#aaa;text-align:center;margin-top:10px;line-height:1.7;}
+.ea-mfoot a,.ea-mfoot span{color:#E8502A;font-weight:700;cursor:pointer;}
+/* success */
+.ea-success{text-align:center;padding:20px 0 8px;}
+.ea-success .sicon{font-size:52px;margin-bottom:12px;}
+.ea-success h3{font-size:1.15rem;font-weight:900;color:#2C2C2C;margin-bottom:6px;}
+.ea-success p{font-size:13px;color:#888;}
+/* field row */
+.ea-frow{display:flex;gap:10px;}
+.ea-frow .ea-field{flex:1;}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .ea-hero-inner,.ea-cta-grid{grid-template-columns:1fr;}
+  .ea-hero-img{height:260px;}
+  .ea-feat-grid,.ea-how-grid{grid-template-columns:1fr;}
+  .ea-how-grid::before{display:none;}
+  .ea-stats-grid{grid-template-columns:repeat(2,1fr);}
+  .ea-footer-grid{grid-template-columns:repeat(2,1fr);}
+}
+@media(max-width:600px){
+  .ea-nav-links,.ea-nav-actions{display:none;}
+  .ea-hamburger{display:flex;}
+  .ea-hero,.ea-section{padding:48px 20px;}
+  .ea-hero-text h1{font-size:1.9rem;}
+  .ea-h2{font-size:1.3rem;}
+  .ea-search-row{flex-direction:column;}
+  .ea-stats-grid{grid-template-columns:1fr 1fr;}
+  .ea-footer-grid{grid-template-columns:1fr;}
+}
+</style>
+
+<div class="ea-home">
+
+<!-- NAV -->
+<nav class="ea-nav">
+  <div class="ea-nav-inner">
+    <a href="/" class="ea-nav-logo">Easy<span>Awas</span></a>
+    <div class="ea-nav-links">
+      <a href="#">Search</a>
+      <a href="#">Browse</a>
+      <a href="#">Post Ad</a>
+      <a href="#">Help</a>
+    </div>
+    <div class="ea-nav-actions">
+      <button class="ea-btn-out" onclick="eaOpen()">Register</button>
+      <button class="ea-btn-fill" onclick="eaOpen()">Log In</button>
+    </div>
+    <div class="ea-hamburger" onclick="eaToggleNav()"><span></span><span></span><span></span></div>
+  </div>
+</nav>
+<div class="ea-mob-menu" id="eaMobMenu">
+  <a href="#">Search</a><a href="#">Browse</a><a href="#">Post Ad</a><a href="#">Help</a>
+  <div class="ea-mob-btns">
+    <button class="ea-btn-out" onclick="eaOpen()">Register</button>
+    <button class="ea-btn-fill" onclick="eaOpen()">Log In</button>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="ea-hero">
+  <div class="ea-hero-inner">
+    <div class="ea-hero-text">
+      <p class="ea-label">Nepal's #1 Rental Platform</p>
+      <h1>Find Your Perfect <span>Room in Nepal</span></h1>
+      <p>50,000+ rooms to rent across Nepal — no broker fees, no hidden charges.</p>
+      <div class="ea-search-box">
+        <div class="ea-tabs">
+          <div class="ea-tab on" onclick="eaTab(this,'rooms')">Rooms</div>
+          <div class="ea-tab" onclick="eaTab(this,'flatmates')">Flatmates</div>
+          <div class="ea-tab" onclick="eaTab(this,'buddyups')">Buddy Ups</div>
+        </div>
+        <div class="ea-search-row">
+          <input class="ea-search-inp" id="eaSearchInp" type="text" placeholder="Enter city or area (e.g. Kathmandu, Pokhara)">
+          <button class="ea-search-go">Search</button>
+        </div>
+      </div>
+      <div class="ea-trust"><span class="ea-trust-stars">★★★★★</span> Rated 4.8/5 &nbsp;·&nbsp; 18,000+ happy renters</div>
+    </div>
+    <div class="ea-hero-img">
+      <div class="ea-hero-img-text"><div class="icon">🏠</div><p>Beautiful rooms across Nepal</p></div>
+      <div class="ea-hero-card"><strong>2,400+</strong><span>Active listings now</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="ea-section grey">
+  <div class="ea-wrap">
+    <p class="ea-label">Why EasyAwas?</p>
+    <h2 class="ea-h2">The smarter way to find a room</h2>
+    <div class="ea-feat-grid">
+      <div class="ea-feat-card">
+        <div class="ea-feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#E8502A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg></div>
+        <h3>Largest Listings in Nepal</h3>
+        <p>Thousands of verified rooms across Kathmandu, Pokhara, Lalitpur, Biratnagar and 70+ more cities.</p>
+      </div>
+      <div class="ea-feat-card">
+        <div class="ea-feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#E8502A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+        <h3>Safe &amp; Trusted</h3>
+        <p>Every listing is reviewed by our team. No fake ads, no scams — only real homes.</p>
+      </div>
+      <div class="ea-feat-card">
+        <div class="ea-feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#E8502A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="7" r="4"/><path d="M3 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/><path d="M19 8v6M16 11h6"/></svg></div>
+        <h3>Find Your People</h3>
+        <p>Search by lifestyle, budget and preferences. Connect with compatible flatmates.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA CARDS -->
+<section class="ea-section white">
+  <div class="ea-wrap">
+    <div class="ea-cta-grid">
+      <div class="ea-cta-card a">
+        <span class="emoji">🔍</span>
+        <h3>Need a Room?</h3>
+        <p>Post a free Room Wanted ad so landlords across Nepal can find you. Takes less than 2 minutes.</p>
+        <a href="#" class="ea-cta-btn" onclick="eaOpen();return false;">Post Free Ad</a>
+      </div>
+      <div class="ea-cta-card b">
+        <span class="emoji">🏡</span>
+        <h3>Have a Room to Rent?</h3>
+        <p>List your room and find the right tenant within days. Reach thousands of verified renters.</p>
+        <a href="#" class="ea-cta-btn" onclick="eaOpen();return false;">List Your Room</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CITIES -->
+<section class="ea-section grey">
+  <div class="ea-wrap">
+    <p class="ea-label">Browse by location</p>
+    <h2 class="ea-h2">Search Rooms by City</h2>
+    <div class="ea-cities">
+      <a href="#" class="ea-city">🏙️ Kathmandu</a>
+      <a href="#" class="ea-city">🏔️ Pokhara</a>
+      <a href="#" class="ea-city">🌆 Lalitpur</a>
+      <a href="#" class="ea-city">🏘️ Biratnagar</a>
+      <a href="#" class="ea-city">🏗️ Birgunj</a>
+      <a href="#" class="ea-city">🌳 Butwal</a>
+      <a href="#" class="ea-city">🏞️ Dharan</a>
+      <a href="#" class="ea-city">🌄 Bharatpur</a>
+      <a href="#" class="ea-city">🏡 Hetauda</a>
+      <a href="#" class="ea-city">🌿 Nepalgunj</a>
+      <a href="#" class="ea-city">⛰️ Dhangadhi</a>
+      <a href="#" class="ea-city">🌸 Janakpur</a>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="ea-section white">
+  <div class="ea-wrap">
+    <p class="ea-label">Getting started</p>
+    <h2 class="ea-h2">How EasyAwas Works</h2>
+    <div class="ea-how-grid">
+      <div class="ea-step"><div class="ea-step-num">1</div><h3>Create a Free Account</h3><p>Sign up in seconds using phone, email or Google. No credit card needed.</p></div>
+      <div class="ea-step"><div class="ea-step-num">2</div><h3>Search or Post an Ad</h3><p>Browse thousands of real listings or post your room wanted ad for free.</p></div>
+      <div class="ea-step"><div class="ea-step-num">3</div><h3>Connect &amp; Move In</h3><p>Message landlords directly, agree terms and move in!</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="ea-section coral">
+  <div class="ea-wrap">
+    <div class="ea-stats-grid">
+      <div class="ea-stat"><strong>50,000+</strong><span>Rooms Listed</span></div>
+      <div class="ea-stat"><strong>18,000+</strong><span>Happy Renters</span></div>
+      <div class="ea-stat"><strong>77</strong><span>Districts Covered</span></div>
+      <div class="ea-stat"><strong>4.8★</strong><span>User Rating</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- MEDIA -->
+<section class="ea-section grey">
+  <div class="ea-wrap" style="text-align:center;">
+    <p style="font-size:12px;font-weight:700;color:#aaa;letter-spacing:.08em;text-transform:uppercase;margin-bottom:24px;">As Seen In</p>
+    <div class="ea-media-logos">
+      <div class="ea-media-logo">Kantipur</div>
+      <div class="ea-media-logo">MyRepublica</div>
+      <div class="ea-media-logo">OnlineKhabar</div>
+      <div class="ea-media-logo">Himalayan Times</div>
+      <div class="ea-media-logo">Setopati</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="ea-footer">
+  <div class="ea-footer-grid">
+    <div>
+      <div class="ea-footer-logo">Easy<span>Awas</span></div>
+      <p>Nepal's most trusted room rental platform. Connecting landlords and tenants since 2024.</p>
+    </div>
+    <div>
+      <h4>For Renters</h4>
+      <ul><li><a href="#">Search Rooms</a></li><li><a href="#">Post Room Wanted</a></li><li><a href="#">Find Flatmates</a></li><li><a href="#">Safety Tips</a></li></ul>
+    </div>
+    <div>
+      <h4>For Landlords</h4>
+      <ul><li><a href="#">List Your Room</a></li><li><a href="#">Pricing</a></li><li><a href="#">Landlord Guide</a></li><li><a href="#">Manage Listings</a></li></ul>
+    </div>
+    <div>
+      <h4>Help &amp; Contact</h4>
+      <ul><li><a href="#">About EasyAwas</a></li><li><a href="#">Contact Us</a></li><li><a href="#">FAQ</a></li><li><a href="#">Privacy Policy</a></li></ul>
+    </div>
+  </div>
+  <div class="ea-footer-bottom">
+    <p>© 2024 EasyAwas. All rights reserved.</p>
+    <div class="ea-socials"><div class="ea-soc">f</div><div class="ea-soc">in</div><div class="ea-soc">▶</div></div>
+  </div>
+</footer>
+
+<!-- ═══════════════════════════════
+     AUTH MODAL — Daraz style
+═══════════════════════════════ -->
+<div class="ea-overlay" id="eaOverlay" onclick="eaOverlayClick(event)">
+  <div class="ea-modal">
+
+    <!-- Red header -->
+    <div class="ea-mhead">
+      <button class="ea-mclose" onclick="eaClose()">&#10005;</button>
+      <div class="ea-mhead-logo">EasyAwas</div>
+      <p>Nepal's #1 Room Rental Platform</p>
+    </div>
+
+    <div class="ea-mbody">
+
+      <!-- SCREEN 1: Enter phone or email -->
+      <div class="ea-sc on" id="sc1">
+        <h3>Log In or Sign Up</h3>
+        <p class="ea-sc-sub">Enter your phone or email to continue</p>
+        <div class="ea-mmsg" id="sc1msg"></div>
+
+        <div class="ea-mpills">
+          <button class="ea-mpill on" id="pillPhone" onclick="eaMethod('phone')">📱 Phone</button>
+          <button class="ea-mpill" id="pillEmail" onclick="eaMethod('email')">✉️ Email</button>
+        </div>
+
+        <div id="phoneWrap" class="ea-field">
+          <label>Phone Number</label>
+          <div class="ea-ph-row">
+            <select class="ea-ph-code" id="dialCode">
+              <option value="+977">🇳🇵 +977</option>
+              <option value="+91">🇮🇳 +91</option>
+              <option value="+1">🇺🇸 +1</option>
+              <option value="+44">🇬🇧 +44</option>
+              <option value="+61">🇦🇺 +61</option>
+              <option value="+971">🇦🇪 +971</option>
+              <option value="+974">🇶🇦 +974</option>
+              <option value="+966">🇸🇦 +966</option>
+              <option value="+65">🇸🇬 +65</option>
+              <option value="+49">🇩🇪 +49</option>
+              <option value="+33">🇫🇷 +33</option>
+              <option value="+81">🇯🇵 +81</option>
+            </select>
+            <input class="ea-inp" type="tel" id="phoneNum" placeholder="98XXXXXXXX" maxlength="12">
+          </div>
+        </div>
+
+        <div id="emailWrap" class="ea-field" style="display:none;">
+          <label>Email Address</label>
+          <input class="ea-inp" type="email" id="emailVal" placeholder="yourname@gmail.com">
+        </div>
+
+        <button class="ea-msubmit" onclick="sc1Next()">Continue →</button>
+        <div class="ea-mor"><span>or</span></div>
+        <button class="ea-mgoogle" onclick="eaGoogle()">
+          <svg viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+          Continue with Google
+        </button>
+        <div class="ea-mfoot">By continuing you agree to our <a href="#">Terms</a> &amp; <a href="#">Privacy Policy</a></div>
+      </div>
+
+      <!-- SCREEN 2: OTP -->
+      <div class="ea-sc" id="sc2">
+        <h3 id="sc2title">Enter verification code</h3>
+        <p class="ea-sc-sub">We sent a 6-digit code to <strong id="sc2dest"></strong><br>
+          <span style="color:#E8502A;font-weight:700;font-size:13px;cursor:pointer;" onclick="eaGo('sc1')">← Change</span></p>
+        <div class="ea-mmsg" id="sc2msg"></div>
+        <div class="ea-otp-row">
+          <input class="ea-otp-d" id="d0" maxlength="1" oninput="otpFwd(0)" onkeydown="otpBk(0,event)">
+          <input class="ea-otp-d" id="d1" maxlength="1" oninput="otpFwd(1)" onkeydown="otpBk(1,event)">
+          <input class="ea-otp-d" id="d2" maxlength="1" oninput="otpFwd(2)" onkeydown="otpBk(2,event)">
+          <input class="ea-otp-d" id="d3" maxlength="1" oninput="otpFwd(3)" onkeydown="otpBk(3,event)">
+          <input class="ea-otp-d" id="d4" maxlength="1" oninput="otpFwd(4)" onkeydown="otpBk(4,event)">
+          <input class="ea-otp-d" id="d5" maxlength="1" oninput="otpFwd(5)" onkeydown="otpBk(5,event)">
+        </div>
+        <div class="ea-resend-row">
+          Didn't get it? <button class="ea-resend-btn" id="resendBtn" onclick="resendOtp()">Resend code</button>
+          <span id="resendTimer"></span>
+        </div>
+        <button class="ea-msubmit" onclick="sc2Verify()">Verify</button>
+      </div>
+
+      <!-- SCREEN 3a: Existing user — password -->
+      <div class="ea-sc" id="sc3login">
+        <h3>Welcome back!</h3>
+        <p class="ea-sc-sub">Enter your password for <strong id="sc3contact"></strong></p>
+        <div class="ea-chip">✓ Contact verified</div>
+        <div class="ea-mmsg" id="sc3msg"></div>
+        <div class="ea-field">
+          <label>Password</label>
+          <div class="ea-pw-wrap">
+            <input class="ea-inp" type="password" id="loginPass" placeholder="Enter your password">
+            <span class="ea-pw-eye" onclick="togglePw('loginPass',this)">Show</span>
+          </div>
+        </div>
+        <div style="text-align:right;margin-bottom:14px;">
+          <span style="font-size:13px;color:#E8502A;font-weight:700;cursor:pointer;" onclick="forgotPw()">Forgot password?</span>
+        </div>
+        <button class="ea-msubmit" onclick="doLogin()">Log In</button>
+        <div class="ea-mfoot"><span onclick="eaGo('sc1')">Use a different account</span></div>
+      </div>
+
+      <!-- SCREEN 3b: New user — complete profile -->
+      <div class="ea-sc" id="sc3reg">
+        <h3>Create your account</h3>
+        <p class="ea-sc-sub">Almost done — fill in your details below</p>
+        <div class="ea-chip">✓ <span id="verifiedLabel"></span></div>
+        <div class="ea-mmsg" id="sc3rmsg"></div>
+        <div class="ea-frow">
+          <div class="ea-field"><label>First Name *</label><input class="ea-inp" type="text" id="regFirst" placeholder="Ram"></div>
+          <div class="ea-field"><label>Last Name *</label><input class="ea-inp" type="text" id="regLast" placeholder="Sharma"></div>
+        </div>
+        <div class="ea-field" id="regEmailWrap">
+          <label>Email <span style="color:#bbb;font-weight:400;text-transform:none;">(optional)</span></label>
+          <input class="ea-inp" type="email" id="regEmail" placeholder="yourname@gmail.com">
+        </div>
+        <div class="ea-field" id="regPhoneWrap" style="display:none;">
+          <label>Phone <span style="color:#bbb;font-weight:400;text-transform:none;">(optional)</span></label>
+          <div class="ea-ph-row">
+            <select class="ea-ph-code" id="regDialCode">
+              <option value="+977">🇳🇵 +977</option><option value="+91">🇮🇳 +91</option>
+              <option value="+1">🇺🇸 +1</option><option value="+44">🇬🇧 +44</option>
+            </select>
+            <input class="ea-inp" type="tel" id="regPhone" placeholder="98XXXXXXXX">
+          </div>
+        </div>
+        <div class="ea-field">
+          <label>Address / City *</label>
+          <input class="ea-inp" type="text" id="regAddr" placeholder="e.g. Thamel, Kathmandu">
+        </div>
+        <div class="ea-field">
+          <label>Password *</label>
+          <div class="ea-pw-wrap">
+            <input class="ea-inp" type="password" id="regPass" placeholder="Min. 8 characters" oninput="pwStr()">
+            <span class="ea-pw-eye" onclick="togglePw('regPass',this)">Show</span>
+          </div>
+          <div class="ea-pw-bar"><div id="pwBar"></div></div>
+          <div class="ea-pw-lbl" id="pwLbl"></div>
+        </div>
+        <div class="ea-field">
+          <label>Confirm Password *</label>
+          <div class="ea-pw-wrap">
+            <input class="ea-inp" type="password" id="regPass2" placeholder="Repeat password">
+            <span class="ea-pw-eye" onclick="togglePw('regPass2',this)">Show</span>
+          </div>
+        </div>
+        <button class="ea-msubmit" onclick="doRegister()">Create Account</button>
+        <div class="ea-mfoot"><span onclick="eaGo('sc1')">Already registered? Log in</span></div>
+      </div>
+
+      <!-- SCREEN 4: Success -->
+      <div class="ea-sc" id="sc4">
+        <div class="ea-success">
+          <div class="sicon">🎉</div>
+          <h3 id="successTitle">Welcome to EasyAwas!</h3>
+          <p id="successMsg">Your account is ready. Start finding your perfect room.</p>
+        </div>
+      </div>
+
+    </div><!-- /ea-mbody -->
+  </div>
+</div>
+
+</div><!-- /ea-home -->
+
+<script>
+/* ── NAV ── */
+function eaToggleNav(){document.getElementById('eaMobMenu').classList.toggle('open');}
+document.addEventListener('click',function(e){
+  var m=document.getElementById('eaMobMenu');
+  if(m&&m.classList.contains('open')&&!m.contains(e.target)&&!e.target.closest('.ea-hamburger'))m.classList.remove('open');
+});
+
+/* ── SEARCH TABS ── */
+function eaTab(el,t){
+  document.querySelectorAll('.ea-tab').forEach(function(x){x.classList.remove('on');});
+  el.classList.add('on');
+  var ph={rooms:'Enter city or area (e.g. Kathmandu, Pokhara)',flatmates:'Where are you looking for a flatmate?',buddyups:'Find someone to search with — enter a city'};
+  document.getElementById('eaSearchInp').placeholder=ph[t];
+}
+
+/* ── MODAL OPEN/CLOSE ── */
+function eaOpen(){
+  document.getElementById('eaOverlay').classList.add('on');
+  document.body.style.overflow='hidden';
+  eaGo('sc1');
+}
+function eaClose(){
+  document.getElementById('eaOverlay').classList.remove('on');
+  document.body.style.overflow='';
+}
+function eaOverlayClick(e){if(e.target===document.getElementById('eaOverlay'))eaClose();}
+document.addEventListener('keydown',function(e){if(e.key==='Escape')eaClose();});
+function eaGo(id){
+  document.querySelectorAll('.ea-sc').forEach(function(s){s.classList.remove('on');});
+  document.getElementById(id).classList.add('on');
+}
+
+/* ── AUTH STATE ── */
+var auth={method:'phone',contact:'',otp:''};
+
+/* ── METHOD TOGGLE ── */
+function eaMethod(m){
+  auth.method=m;
+  document.getElementById('phoneWrap').style.display=m==='phone'?'block':'none';
+  document.getElementById('emailWrap').style.display=m==='email'?'block':'none';
+  document.getElementById('pillPhone').classList.toggle('on',m==='phone');
+  document.getElementById('pillEmail').classList.toggle('on',m==='email');
+}
+
+/* ── UTILITIES ── */
+function msg(id,txt,type){var e=document.getElementById(id);e.textContent=txt;e.className='ea-mmsg'+(txt?(type==='ok'?' ok':' err'):'');}
+function isEmail(v){return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);}
+function togglePw(id,btn){var i=document.getElementById(id);i.type=i.type==='password'?'text':'password';btn.textContent=i.type==='password'?'Show':'Hide';}
+
+/* ── SCREEN 1 ── */
+function sc1Next(){
+  msg('sc1msg','','err');
+  if(auth.method==='phone'){
+    var num=document.getElementById('phoneNum').value.trim();
+    var code=document.getElementById('dialCode').value;
+    if(!num||num.length<7){msg('sc1msg','Please enter a valid phone number.','err');return;}
+    auth.contact=code+num;
+  } else {
+    var em=document.getElementById('emailVal').value.trim();
+    if(!isEmail(em)){msg('sc1msg','Please enter a valid email address.','err');return;}
+    auth.contact=em;
+  }
+  auth.otp=String(Math.floor(100000+Math.random()*900000));
+  msg('sc1msg','Sending code to '+auth.contact+'…','ok');
+  setTimeout(function(){
+    document.getElementById('sc2title').textContent=auth.method==='phone'?'Verify your phone':'Verify your email';
+    document.getElementById('sc2dest').textContent=auth.contact;
+    alert('DEMO MODE\nYour verification code is: '+auth.otp+'\n(In production this is sent via SMS/email)');
+    otpReset();
+    eaGo('sc2');
+  },600);
+}
+
+/* ── OTP ── */
+function otpReset(){for(var i=0;i<6;i++)document.getElementById('d'+i).value='';document.getElementById('d0').focus();startTimer();}
+function otpFwd(i){if(document.getElementById('d'+i).value&&i<5)document.getElementById('d'+(i+1)).focus();}
+function otpBk(i,e){if(e.key==='Backspace'&&!document.getElementById('d'+i).value&&i>0)document.getElementById('d'+(i-1)).focus();}
+function getOtp(){var s='';for(var i=0;i<6;i++)s+=document.getElementById('d'+i).value;return s;}
+
+var timerInt=null;
+function startTimer(){
+  var btn=document.getElementById('resendBtn'),el=document.getElementById('resendTimer'),s=30;
+  btn.disabled=true;el.textContent='('+s+'s)';
+  clearInterval(timerInt);
+  timerInt=setInterval(function(){s--;el.textContent='('+s+'s)';if(s<=0){clearInterval(timerInt);btn.disabled=false;el.textContent='';}},1000);
+}
+function resendOtp(){auth.otp=String(Math.floor(100000+Math.random()*900000));alert('DEMO: New code is '+auth.otp);otpReset();}
+
+/* ── SCREEN 2: Verify ── */
+function sc2Verify(){
+  if(getOtp().length<6){msg('sc2msg','Please enter all 6 digits.','err');return;}
+  if(getOtp()!==auth.otp){msg('sc2msg','Incorrect code. Please try again.','err');return;}
+  msg('sc2msg','','ok');
+  /* Check if user exists in WordPress */
+  var lookup=isEmail(auth.contact)?('email='+encodeURIComponent(auth.contact)):'search='+encodeURIComponent(auth.contact);
+  fetch('/wp-json/wp/v2/users?'+lookup,{headers:{'Authorization':'Basic '+btoa('easyawas:gbUq tXiB tjPx BsVj maE6 n0A9')}})
+  .then(function(r){return r.json();})
+  .then(function(users){
+    if(users&&users.length>0){
+      /* Existing user → password screen */
+      document.getElementById('sc3contact').textContent=auth.contact;
+      eaGo('sc3login');
+    } else {
+      /* New user → registration screen */
+      document.getElementById('verifiedLabel').textContent=(isEmail(auth.contact)?'Email':'Phone')+' verified: '+auth.contact;
+      if(isEmail(auth.contact)){
+        document.getElementById('regEmailWrap').style.display='none';
+        document.getElementById('regPhoneWrap').style.display='block';
+      } else {
+        document.getElementById('regEmailWrap').style.display='block';
+        document.getElementById('regPhoneWrap').style.display='none';
+      }
+      eaGo('sc3reg');
+    }
+  })
+  .catch(function(){
+    /* On error, treat as new user */
+    document.getElementById('verifiedLabel').textContent=(isEmail(auth.contact)?'Email':'Phone')+' verified: '+auth.contact;
+    eaGo('sc3reg');
+  });
+}
+
+/* ── LOGIN ── */
+function doLogin(){
+  var pass=document.getElementById('loginPass').value;
+  if(!pass){msg('sc3msg','Please enter your password.','err');return;}
+  msg('sc3msg','Logging in…','ok');
+  fetch('/wp-json/jwt-auth/v1/token',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({username:auth.contact,password:pass})})
+  .then(function(r){return r.json();})
+  .then(function(d){
+    if(d.token){
+      document.getElementById('successTitle').textContent='Welcome back!';
+      document.getElementById('successMsg').textContent='You are now logged in. Enjoy EasyAwas!';
+      eaGo('sc4');
+      setTimeout(function(){window.location.reload();},1800);
+    } else {
+      msg('sc3msg',(d.message||'Incorrect password.').replace(/<[^>]+>/g,''),'err');
+    }
+  }).catch(function(){msg('sc3msg','Something went wrong. Try again.','err');});
+}
+
+function forgotPw(){
+  msg('sc3msg','Password reset link sent to '+auth.contact,'ok');
+}
+
+/* ── REGISTER ── */
+function pwStr(){
+  var p=document.getElementById('regPass').value,sc=0;
+  if(p.length>=8)sc++;if(p.length>=12)sc++;if(/[A-Z]/.test(p))sc++;if(/[0-9]/.test(p))sc++;if(/[^A-Za-z0-9]/.test(p))sc++;
+  var lvl=[['','',0],['#dc2626','Weak',20],['#f97316','Fair',50],['#eab308','Good',70],['#22c55e','Strong',90],['#16a34a','Very strong',100]][Math.min(sc,5)];
+  var b=document.getElementById('pwBar');b.style.width=lvl[2]+'%';b.style.background=lvl[0];
+  var l=document.getElementById('pwLbl');l.textContent=p?lvl[1]:'';l.style.color=lvl[0];
+}
+
+function doRegister(){
+  var first=document.getElementById('regFirst').value.trim();
+  var last=document.getElementById('regLast').value.trim();
+  var addr=document.getElementById('regAddr').value.trim();
+  var pass=document.getElementById('regPass').value;
+  var pass2=document.getElementById('regPass2').value;
+  var email=isEmail(auth.contact)?auth.contact:document.getElementById('regEmail').value.trim();
+  var phone=isEmail(auth.contact)?(document.getElementById('regDialCode').value+document.getElementById('regPhone').value.trim()):auth.contact;
+  if(!first||!last||!addr){msg('sc3rmsg','Please fill in all required fields.','err');return;}
+  if(!email||!isEmail(email)){msg('sc3rmsg','Please enter a valid email address.','err');return;}
+  if(pass.length<8){msg('sc3rmsg','Password must be at least 8 characters.','err');return;}
+  if(pass!==pass2){msg('sc3rmsg','Passwords do not match.','err');return;}
+  msg('sc3rmsg','Creating your account…','ok');
+  fetch('/wp-json/wp/v2/users',{
+    method:'POST',
+    headers:{'Content-Type':'application/json','Authorization':'Basic '+btoa('easyawas:gbUq tXiB tjPx BsVj maE6 n0A9')},
+    body:JSON.stringify({username:email,email:email,password:pass,first_name:first,last_name:last,meta:{address:addr,phone:phone}})
+  }).then(function(r){return r.json();})
+  .then(function(d){
+    if(d.id){eaGo('sc4');}
+    else{msg('sc3rmsg',(d.message||'Registration failed. Email may already be in use.').replace(/<[^>]+>/g,''),'err');}
+  }).catch(function(){msg('sc3rmsg','Something went wrong. Please try again.','err');});
+}
+
+/* ── GOOGLE ── */
+var G_CLIENT_ID='624760313020-vphf5a6h0rnaodec9csubnflbv66eai9.apps.googleusercontent.com';
+var googleTokenClient=null;
+
+function eaGoogle(){
+  if(typeof google==='undefined'){
+    msg('sc1msg','Google sign-in is loading, please try again in a moment.','err');
+    return;
+  }
+  googleTokenClient=google.accounts.oauth2.initTokenClient({
+    client_id:G_CLIENT_ID,
+    scope:'openid email profile',
+    prompt:'select_account',
+    callback:function(tokenResponse){
+      if(tokenResponse.error){
+        msg('sc1msg','Google sign-in was cancelled.','err');
+        return;
+      }
+      /* Fetch user profile from Google */
+      fetch('https://www.googleapis.com/oauth2/v3/userinfo',{
+        headers:{Authorization:'Bearer '+tokenResponse.access_token}
+      }).then(function(r){return r.json();})
+      .then(function(profile){
+        handleGoogleProfile(profile);
+      }).catch(function(){
+        msg('sc1msg','Could not get Google profile. Please try again.','err');
+      });
+    }
+  });
+  googleTokenClient.requestAccessToken();
+}
+
+function handleGoogleProfile(p){
+  /* p = {sub, email, name, given_name, family_name, picture} */
+  auth.contact=p.email;
+  auth.method='email';
+  /* Check if user exists in WordPress */
+  fetch('/wp-json/wp/v2/users?search='+encodeURIComponent(p.email),{
+    headers:{Authorization:'Basic '+btoa('easyawas:gbUq tXiB tjPx BsVj maE6 n0A9')}
+  }).then(function(r){return r.json();})
+  .then(function(users){
+    if(users&&users.length>0){
+      /* Existing user — go to password screen */
+      document.getElementById('sc3contact').textContent=p.email;
+      eaGo('sc3login');
+    } else {
+      /* New user — pre-fill registration with Google data */
+      document.getElementById('verifiedLabel').textContent='Google verified: '+p.email;
+      document.getElementById('regFirst').value=p.given_name||'';
+      document.getElementById('regLast').value=p.family_name||'';
+      document.getElementById('regEmailWrap').style.display='none';
+      document.getElementById('regPhoneWrap').style.display='block';
+      eaGo('sc3reg');
+    }
+  }).catch(function(){
+    /* Treat as new user */
+    document.getElementById('verifiedLabel').textContent='Google verified: '+p.email;
+    document.getElementById('regFirst').value=p.given_name||'';
+    document.getElementById('regLast').value=p.family_name||'';
+    document.getElementById('regEmailWrap').style.display='none';
+    document.getElementById('regPhoneWrap').style.display='block';
+    eaGo('sc3reg');
+  });
+}
+
+/* ── Intercept Kadence Sign In button ── */
+document.addEventListener('DOMContentLoaded',function(){
+  /* Kadence nav Sign In link */
+  var navSignIn=document.querySelector('.ea-signin-btn a');
+  if(navSignIn){
+    navSignIn.addEventListener('click',function(e){
+      e.preventDefault();
+      eaOpen();
+    });
+  }
+  /* Also intercept HivePress login link if it appears */
+  var hpLogin=document.querySelector('.menu-item--user-login a');
+  if(hpLogin){
+    hpLogin.addEventListener('click',function(e){
+      e.preventDefault();
+      eaOpen();
+    });
+  }
+  /* Move modal to body so no stacking context traps it */
+  var overlay=document.getElementById('eaOverlay');
+  if(overlay&&overlay.parentNode!==document.body){
+    document.body.appendChild(overlay);
+  }
+});
+</script>
+<!-- /wp:html -->

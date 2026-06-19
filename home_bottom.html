@@ -1,0 +1,195 @@
+
+<!-- wp:html -->
+<style>
+.ea-bottom-section{background:#fff;padding:0;}
+
+/* ── ABOUT US ── */
+.ea-about-wrap{max-width:960px;margin:0 auto;padding:72px 24px 64px;display:flex;gap:56px;align-items:center;flex-wrap:wrap;}
+.ea-about-text{flex:1;min-width:260px;}
+.ea-about-badge{display:inline-block;background:#fff7ed;color:#f97316;border:1.5px solid rgba(249,115,22,0.25);padding:5px 16px;border-radius:50px;font-size:12px;font-weight:800;letter-spacing:.05em;margin-bottom:14px;}
+.ea-about-text h2{font-size:2rem;font-weight:900;color:#1c1917;margin-bottom:14px;font-family:'Nunito',sans-serif;}
+.ea-about-text p{font-size:15px;color:#78716c;font-weight:600;line-height:1.8;margin-bottom:16px;font-family:'Nunito',sans-serif;}
+.ea-about-text ul{list-style:none;margin-bottom:24px;}
+.ea-about-text ul li{font-size:14px;color:#44403c;font-weight:700;padding:5px 0;display:flex;align-items:center;gap:8px;font-family:'Nunito',sans-serif;}
+.ea-about-text ul li::before{content:'✓';color:#f97316;font-weight:900;}
+.ea-about-img{flex:1;min-width:240px;background:linear-gradient(135deg,#fff7ed,#fef3c7);border-radius:20px;padding:44px 32px;text-align:center;}
+.ea-about-img .big-icon{font-size:80px;margin-bottom:16px;}
+.ea-about-img p{font-size:14px;color:#78716c;font-weight:700;font-family:'Nunito',sans-serif;}
+.ea-about-img strong{display:block;font-size:1.5rem;font-weight:900;color:#f97316;margin-bottom:4px;font-family:'Nunito',sans-serif;}
+
+/* ── DIVIDER ── */
+.ea-section-divider{height:2px;background:linear-gradient(90deg,transparent,#f97316,transparent);margin:0 24px;}
+
+/* ── CONTACT ── */
+.ea-contact-wrap{background:#fffbf5;padding:72px 24px 80px;}
+.ea-contact-inner{max-width:960px;margin:0 auto;}
+.ea-contact-inner .ea-about-badge{margin-bottom:14px;}
+.ea-contact-inner h2{font-size:2rem;font-weight:900;color:#1c1917;margin-bottom:10px;font-family:'Nunito',sans-serif;}
+.ea-contact-inner .sub{font-size:15px;color:#78716c;font-weight:600;margin-bottom:40px;font-family:'Nunito',sans-serif;}
+.ea-contact-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px;margin-bottom:48px;}
+.ea-contact-card{background:#fff;border:1.5px solid #e7e5e4;border-radius:16px;padding:28px 22px;text-align:center;transition:all .25s;}
+.ea-contact-card:hover{border-color:#f97316;box-shadow:0 4px 20px rgba(249,115,22,0.1);transform:translateY(-3px);}
+.ea-contact-card .c-icon{font-size:36px;margin-bottom:12px;}
+.ea-contact-card h4{font-size:15px;font-weight:800;color:#1c1917;margin-bottom:6px;font-family:'Nunito',sans-serif;}
+.ea-contact-card p{font-size:13px;color:#78716c;font-weight:600;font-family:'Nunito',sans-serif;}
+.ea-contact-card a{color:#f97316;font-weight:700;text-decoration:none;font-size:13px;}
+.ea-contact-card a:hover{text-decoration:underline;}
+
+/* Contact form */
+.ea-contact-form-wrap{display:flex;gap:40px;flex-wrap:wrap;align-items:flex-start;}
+.ea-contact-form{flex:1;min-width:280px;}
+.ea-cf-row{display:flex;gap:14px;}
+.ea-cf-row .ea-cf-group{flex:1;}
+.ea-cf-group{margin-bottom:16px;}
+.ea-cf-group label{display:block;font-size:13px;font-weight:700;color:#374151;margin-bottom:5px;font-family:'Nunito',sans-serif;}
+.ea-cf-group input,.ea-cf-group textarea,.ea-cf-group select{width:100%;padding:12px 16px;border:1.5px solid #e5e7eb;border-radius:10px;font-size:14px;color:#1c1917;outline:none;transition:border .2s;background:#fff;font-family:'Nunito',sans-serif;}
+.ea-cf-group input:focus,.ea-cf-group textarea:focus{border-color:#f97316;box-shadow:0 0 0 3px rgba(249,115,22,0.1);}
+.ea-cf-group textarea{resize:vertical;min-height:120px;}
+.ea-cf-submit{padding:13px 32px;background:#f97316;color:#fff;border:none;border-radius:12px;font-size:15px;font-weight:800;cursor:pointer;transition:background .2s;font-family:'Nunito',sans-serif;}
+.ea-cf-submit:hover{background:#ea580c;}
+.ea-contact-info{min-width:220px;}
+.ea-contact-info h3{font-size:16px;font-weight:900;color:#1c1917;margin-bottom:16px;font-family:'Nunito',sans-serif;}
+.ea-ci-item{display:flex;gap:12px;align-items:flex-start;margin-bottom:18px;}
+.ea-ci-item .ci-icon{font-size:20px;flex-shrink:0;margin-top:2px;}
+.ea-ci-item div{font-size:13px;color:#78716c;font-weight:600;font-family:'Nunito',sans-serif;}
+.ea-ci-item strong{display:block;font-size:13px;font-weight:800;color:#1c1917;margin-bottom:2px;}
+.ea-cf-msg{display:none;padding:10px 14px;border-radius:10px;font-size:13px;font-weight:700;margin-top:12px;}
+.ea-cf-msg.ok{background:#f0fdf4;color:#16a34a;border:1px solid #bbf7d0;}
+.ea-cf-msg.err{background:#fef2f2;color:#dc2626;border:1px solid #fecaca;}
+
+@media(max-width:600px){
+  .ea-about-wrap{flex-direction:column;gap:28px;padding:48px 20px;}
+  .ea-contact-form-wrap{flex-direction:column;}
+  .ea-cf-row{flex-direction:column;gap:0;}
+}
+</style>
+
+<div class="ea-bottom-section">
+
+  <!-- ── ABOUT US ── -->
+  <div id="about-us">
+    <div class="ea-about-wrap">
+      <div class="ea-about-text">
+        <div class="ea-about-badge">ABOUT EASYAWAS</div>
+        <h2>Nepal's Trusted Rental Platform</h2>
+        <p>EasyAwas was founded with one mission — to make renting in Nepal simple, transparent, and fair for both landlords and tenants. We eliminate brokers, hidden fees, and fake listings.</p>
+        <p>From Kathmandu to Pokhara, from Biratnagar to Butwal — we connect real people with real homes across all 77 districts of Nepal.</p>
+        <ul>
+          <li>Zero broker fees — direct landlord to tenant</li>
+          <li>Verified listings with real photos</li>
+          <li>Secure online payments in NPR</li>
+          <li>24/7 customer support in Nepali & English</li>
+          <li>Trusted by 18,000+ renters across Nepal</li>
+        </ul>
+      </div>
+      <div class="ea-about-img">
+        <div class="big-icon">&#127968;</div>
+        <strong>2,400+</strong>
+        <p>Active listings across Nepal</p>
+        <br>
+        <strong style="color:#10b981;">18,000+</strong>
+        <p>Happy renters since 2024</p>
+        <br>
+        <strong style="color:#1c1917;">75+</strong>
+        <p>Districts covered</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="ea-section-divider"></div>
+
+  <!-- ── CONTACT ── -->
+  <div id="contact" class="ea-contact-wrap">
+    <div class="ea-contact-inner">
+      <div class="ea-about-badge">GET IN TOUCH</div>
+      <h2>Contact Us</h2>
+      <p class="sub">Have a question? We're here to help — reach out anytime.</p>
+
+      <!-- Contact cards -->
+      <div class="ea-contact-grid">
+        <div class="ea-contact-card">
+          <div class="c-icon">&#128222;</div>
+          <h4>Phone</h4>
+          <p><a href="tel:+97714XXXXXX">+977-1-4XXXXXX</a></p>
+          <p style="margin-top:4px;">Mon–Fri, 9am–6pm</p>
+        </div>
+        <div class="ea-contact-card">
+          <div class="c-icon">&#128140;</div>
+          <h4>Email</h4>
+          <p><a href="mailto:hello@easyawas.com">hello@easyawas.com</a></p>
+          <p style="margin-top:4px;">Reply within 24 hours</p>
+        </div>
+        <div class="ea-contact-card">
+          <div class="c-icon">&#128205;</div>
+          <h4>Office</h4>
+          <p>Kathmandu, Bagmati</p>
+          <p style="margin-top:4px;">Nepal</p>
+        </div>
+        <div class="ea-contact-card">
+          <div class="c-icon">&#128172;</div>
+          <h4>Live Chat</h4>
+          <p>Available on the website</p>
+          <p style="margin-top:4px;"><a href="#">Start a chat &#8594;</a></p>
+        </div>
+      </div>
+
+      <!-- Contact form + info -->
+      <div class="ea-contact-form-wrap">
+        <div class="ea-contact-form">
+          <div class="ea-cf-row">
+            <div class="ea-cf-group"><label>First Name *</label><input type="text" id="cf-fname" placeholder="Ram"></div>
+            <div class="ea-cf-group"><label>Last Name *</label><input type="text" id="cf-lname" placeholder="Sharma"></div>
+          </div>
+          <div class="ea-cf-group"><label>Email Address *</label><input type="email" id="cf-email" placeholder="you@example.com"></div>
+          <div class="ea-cf-group">
+            <label>Subject</label>
+            <select id="cf-subject">
+              <option>General Enquiry</option>
+              <option>I am a Tenant</option>
+              <option>I am a Landlord</option>
+              <option>Report a Listing</option>
+              <option>Technical Issue</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="ea-cf-group"><label>Message *</label><textarea id="cf-message" placeholder="Write your message here..."></textarea></div>
+          <button class="ea-cf-submit" onclick="submitContactForm()">Send Message &#8594;</button>
+          <div class="ea-cf-msg" id="cf-msg"></div>
+        </div>
+        <div class="ea-contact-info">
+          <h3>Our Office Hours</h3>
+          <div class="ea-ci-item"><div class="ci-icon">&#128197;</div><div><strong>Sunday – Friday</strong>9:00 AM – 6:00 PM NPT</div></div>
+          <div class="ea-ci-item"><div class="ci-icon">&#128197;</div><div><strong>Saturday</strong>Closed</div></div>
+          <div class="ea-ci-item"><div class="ci-icon">&#127760;</div><div><strong>Language Support</strong>Nepali & English</div></div>
+          <div class="ea-ci-item"><div class="ci-icon">&#128241;</div><div><strong>WhatsApp</strong><a href="https://wa.me/977XXXXXXXXX" style="color:#f97316;font-weight:700;text-decoration:none;">+977 XXXXXXXXX</a></div></div>
+          <div class="ea-ci-item"><div class="ci-icon">&#128248;</div><div><strong>Social Media</strong>
+            <a href="#" style="color:#f97316;font-weight:700;text-decoration:none;display:block;">Facebook</a>
+            <a href="#" style="color:#f97316;font-weight:700;text-decoration:none;display:block;">Instagram</a>
+          </div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+function submitContactForm(){
+  var fn=document.getElementById('cf-fname').value.trim();
+  var ln=document.getElementById('cf-lname').value.trim();
+  var em=document.getElementById('cf-email').value.trim();
+  var msg=document.getElementById('cf-message').value.trim();
+  var el=document.getElementById('cf-msg');
+  if(!fn||!ln||!em||!msg){el.textContent='Please fill in all required fields.';el.className='ea-cf-msg err';el.style.display='block';return;}
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)){el.textContent='Please enter a valid email address.';el.className='ea-cf-msg err';el.style.display='block';return;}
+  el.textContent='Sending...';el.className='ea-cf-msg ok';el.style.display='block';
+  setTimeout(function(){
+    el.textContent='Thank you! Your message has been sent. We will reply within 24 hours.';
+    document.getElementById('cf-fname').value='';
+    document.getElementById('cf-lname').value='';
+    document.getElementById('cf-email').value='';
+    document.getElementById('cf-message').value='';
+  },1000);
+}
+</script>
+<!-- /wp:html -->
